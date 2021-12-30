@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-#import h5py as h5
+import h5py as h5
 import sys
 from scipy.interpolate import interpn
 from matplotlib import cm                                                                          
