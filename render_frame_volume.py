@@ -8,8 +8,8 @@ from scipy.interpolate import interpn
 from matplotlib import cm                                                                          
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
-#chosen_colormap = cm.get_cmap('plasma', 256)
-chosen_colormap = cm.get_cmap('magma', 256)
+chosen_colormap = cm.get_cmap('plasma', 256)
+#chosen_colormap = cm.get_cmap('magma', 256)
 
 def enhance_channel(a, f):
 	return np.clip(a*f,0.0,1.0)
