@@ -46,8 +46,6 @@ def render_volume(points, datacube, angles, **kwargs):
     # Datacube Grid
     Nx, Ny, Nz = datacube.shape
     
-    print(datacube.shape)
-
     datacube += 1e-15
     minimum = np.amin(datacube)
     maximum = np.amax(datacube)
@@ -97,8 +95,6 @@ def render_volume(points, datacube, angles, **kwargs):
             image[:,:,0] = a*r + (1-a)*image[:,:,0]
             image[:,:,1] = a*g + (1-a)*image[:,:,1]
             image[:,:,2] = a*b + (1-a)*image[:,:,2]
-            
-    print(image.shape)
-        
+                    
     return np.swapaxes( np.clip(image, 0.0, 1.0), 0, 1)
 
