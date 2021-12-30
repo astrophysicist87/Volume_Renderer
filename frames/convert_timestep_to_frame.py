@@ -29,7 +29,11 @@ output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[1,2,0,3,4]]
 #            output, fmt="%10.6f" )
 
 outfilename = (sys.argv[1].replace('timestep', 'frame')).replace('.dat','.h5')
-print(outfilename)
+#print(outfilename)
 hf = h5.File(outfilename, 'w')
-hf.create_dataset('density', data = output)
+hf.create_dataset('x', data = output[:,0,0,0])
+hf.create_dataset('y', data = output[0,:,0,1])
+hf.create_dataset('z', data = output[0,0,:,2])
+hf.create_dataset('temperature', data = output[:,:,:,3])
+hf.create_dataset('energy_density', data = output[:,:,:,4])
 hf.close()

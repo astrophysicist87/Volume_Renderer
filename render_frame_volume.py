@@ -41,18 +41,22 @@ def transferFunction(x0):
 
 def main():
 	# Load Datacube
-	#f = h5.File('datacube.hdf5', 'r')
-	#datacube = np.array(f['density'])
+	f = h5.File('datacube.hdf5', 'r')
+	x = np.array(f['x'])
+	y = np.array(f['y'])
+	z = np.array(f['z'])
+	datacube = np.array(f['temperature'])
 	
 	# Datacube Grid
-	#Nx, Ny, Nz = datacube.shape
-	Nx, Ny, Nz = 235, 235, 19
-	datacube = np.loadtxt(sys.argv[1], usecols=(0,1,2,3)).reshape([Nx,Ny,Nz,4])
+	Nx, Ny, Nz = datacube.shape
+	print(datacube.shape)
+	#Nx, Ny, Nz = 235, 235, 19
+	#datacube = np.loadtxt(sys.argv[1], usecols=(0,1,2,3)).reshape([Nx,Ny,Nz,4])
 
-	x = datacube[:,0,0,0]
-	y = datacube[0,:,0,1]
-	z = datacube[0,0,:,2]
-	datacube = datacube[:,:,:,-1]
+	#x = datacube[:,0,0,0]
+	#y = datacube[0,:,0,1]
+	#z = datacube[0,0,:,2]
+	#datacube = datacube[:,:,:,-1]
 	points = (x, y, z)
 
 	datacube += 1e-15
