@@ -100,5 +100,5 @@ def render_volume(points, datacube, angles, **kwargs):
             
     print(image.shape)
         
-    return np.clip(image, 0.0, 1.0).T
+    return np.swapaxes( np.clip(image, 0.0, 1.0), 0, 1)
 
