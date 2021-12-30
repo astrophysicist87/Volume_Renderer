@@ -30,6 +30,6 @@ output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[1,2,0,3,4]]
 
 outfilename = (sys.argv[1].replace('timestep', 'frame')).replace('.dat','.h5')
 print(outfilename)
-hf = h5py.File(outfilename, 'w')
+hf = h5.File(outfilename, 'w')
 hf.create_dataset('density', data = output)
 hf.close()
