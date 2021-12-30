@@ -45,6 +45,8 @@ def render_volume(points, datacube, angles, **kwargs):
     '''
     # Datacube Grid
     Nx, Ny, Nz = datacube.shape
+    
+    print(datacube.shape)
 
     datacube += 1e-15
     minimum = np.amin(datacube)

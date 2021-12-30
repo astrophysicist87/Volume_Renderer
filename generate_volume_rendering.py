@@ -17,6 +17,8 @@ def main():
     z = np.array(f['z'])
     datacube = np.array(f['temperature'])
     
+    print(datacube.shape)
+    
     # this is where the image array is produced
     image = volume_renderer.render_volume((x,y,z), datacube, (0.0, 0.25*np.pi))
 
