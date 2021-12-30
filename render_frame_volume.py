@@ -49,9 +49,6 @@ def main():
 	Nx, Ny, Nz = 235, 235, 19
 	datacube = np.loadtxt(sys.argv[1], usecols=(0,1,2,3)).reshape([Nx,Ny,Nz,4])
 
-	#x = np.linspace(-Nx/2, Nx/2, Nx)
-	#y = np.linspace(-Ny/2, Ny/2, Ny)
-	#z = np.linspace(-Nz/2, Nz/2, Nz)
 	x = datacube[:,0,0,0]
 	y = datacube[0,:,0,1]
 	z = datacube[0,0,:,2]
@@ -89,11 +86,7 @@ def main():
 		camera_grid = interpn(points, datacube, qi, method='linear',\
                                       bounds_error=False, fill_value=np.amin(datacube)\
                                      ).reshape((N,N,N))
-	
-		#np.savetxt('rotated_camera_view.dat',\
-		#		interpn(points, datacube, qi, method='linear',\
-		#		bounds_error=False, fill_value=np.amin(datacube)), fmt="%10.6f")
-	
+		
 		# Do Volume Rendering
 		image = np.zeros((camera_grid.shape[1],camera_grid.shape[2],3))
 
@@ -117,21 +110,7 @@ def main():
 		
 		# Save figure
 		plt.savefig('volumerender' + str(i) + '.png', dpi=500, bbox_inches='tight', pad_inches = 0)
-	
-	
-	
-	# Plot Simple Projection -- for Comparison
-	plt.figure(figsize=(4,4), dpi=80)
-	
-	plt.imshow(np.log(np.mean(datacube,0)), cmap = 'viridis')
-	plt.clim(-5, 5)
-	plt.axis('off')
-	
-	# Save figure
-	plt.savefig('projection.png', dpi=240, bbox_inches='tight', pad_inches = 0)
-	#plt.show()
-	
-
+		
 	return 0
 	
 

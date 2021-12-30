@@ -1,3 +1,4 @@
+import h5py as h5
 import numpy as np
 import sys
 
@@ -19,12 +20,16 @@ output = np.tile(data,(Nz,1,1))
 for iz, zSlice in enumerate(output):
     zSlice[:,0] = np.full_like( zSlice[:,0], zpts[iz] )
 
-# re-shape to (Nx,Ny,Nz,5)
-output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)
+# re-shape to (Nx,Ny,Nz,5) and set column order to x, y, z, T, e
+output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[1,2,0,3,4]]
 
 # set column order to x, y, z, T, e
-output = (output.reshape((output.size//5,5)))[:,[1,2,0,3,4]]
+#output = (output.reshape((output.size//5,5)))[:,[1,2,0,3,4]]
+#np.savetxt( sys.argv[1].replace("timestep", "frame"), \
+#            output, fmt="%10.6f" )
 
-
-np.savetxt( sys.argv[1].replace("timestep", "frame"), \
-            output, fmt="%10.6f" )
+outfilename = (sys.argv[1].replace('timestep', 'frame')).replace('.dat','.h5')
+print(outfilename)
+hf = h5py.File(outfilename, 'w')
+hf.create_dataset('density', data = output)
+hf.close()
