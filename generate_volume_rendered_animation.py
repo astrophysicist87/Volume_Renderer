@@ -10,7 +10,7 @@ from scipy.interpolate import interpn
 from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
-Nangles  = 10
+Nangles  = 100
 datacube = None
 points   = None
 
@@ -18,7 +18,7 @@ def animate(i):
     print('Rendering Scene ' + str(i+1) + ' of ' + str(Nangles), flush=True)
 
     # this is where the image array is produced
-    image = volume_renderer.render_volume(points, datacube, (0.0, 2.0*i*np.pi/Nangles))
+    image = volume_renderer.render_volume(points, datacube, (0.0, 2.0*i*np.pi/Nangles), N=500)
         
     # z-axis in image points up by default
     # swap axes to get conventional heavy-ion orientation
