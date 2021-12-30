@@ -18,7 +18,7 @@ def main():
     datacube = np.array(f['temperature'])
     
     # this is where the image array is produced
-    image = render_volume((x,y,z), datacube, (0.0, 0.25*np.pi))
+    image = volume_renderer.render_volume((x,y,z), datacube, (0.0, 0.25*np.pi))
 
     # Plot Volume Rendering
     plt.figure(figsize=(4,4), dpi=500)
