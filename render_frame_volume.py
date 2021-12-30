@@ -41,7 +41,7 @@ def transferFunction(x0):
 
 def main():
 	# Load Datacube
-	f = h5.File('datacube.hdf5', 'r')
+	f = h5.File(sys.argv[1], 'r')
 	x = np.array(f['x'])
 	y = np.array(f['y'])
 	z = np.array(f['z'])
