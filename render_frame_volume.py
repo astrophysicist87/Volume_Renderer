@@ -8,8 +8,9 @@ from scipy.interpolate import interpn
 from matplotlib import cm                                                                          
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
-chosen_colormap = cm.get_cmap('plasma', 256)
+#chosen_colormap = cm.get_cmap('plasma', 256)
 #chosen_colormap = cm.get_cmap('magma', 256)
+chosen_colormap = cm.get_cmap('inferno', 256)
 
 def enhance_channel(a, f):
 	return np.clip(a*f,0.0,1.0)
@@ -49,7 +50,7 @@ def main():
 	
 	# Datacube Grid
 	Nx, Ny, Nz = datacube.shape
-	print(datacube.shape)
+	#print(datacube.shape)
 	#Nx, Ny, Nz = 235, 235, 19
 	#datacube = np.loadtxt(sys.argv[1], usecols=(0,1,2,3)).reshape([Nx,Ny,Nz,4])
 
@@ -69,9 +70,6 @@ def main():
 	Nangles = 1
 	#phi, theta = 0.25*np.pi, 0.25*np.pi
 	for i in range(Nangles):
-		
-		print('Rendering Scene ' + str(i+1) + ' of ' + str(Nangles), flush=True)
-	
 		# Camera Grid / Query Points -- rotate camera view
 		#angle = 2.0*i*np.pi / Nangles
 		angle = 0.25*np.pi
