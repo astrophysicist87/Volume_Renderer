@@ -34,7 +34,7 @@ def transferFunction(x0):
 	delta = 1.0/(steps-1)
 	a = delta*np.exp( -(x0 - 1.0)**2/delta**2 )
 	for center in np.linspace(0,1,steps-1,endpoint=False):
-		a += 2.0*delta*x**2*np.exp( -(x - center)**2/delta**4 )
+		a += 5.0*delta*x**2*np.exp( -(x - center)**2/delta**4 )
 	return r,g,b,a
 
 
