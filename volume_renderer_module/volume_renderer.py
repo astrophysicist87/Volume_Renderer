@@ -97,6 +97,8 @@ def render_volume(points, datacube, angles, **kwargs):
             image[:,:,0] = a*r + (1-a)*image[:,:,0]
             image[:,:,1] = a*g + (1-a)*image[:,:,1]
             image[:,:,2] = a*b + (1-a)*image[:,:,2]
+            
+    print(image.shape)
         
     return np.clip(image, 0.0, 1.0).T
 

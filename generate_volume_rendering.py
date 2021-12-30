@@ -25,6 +25,8 @@ def main():
     # Plot Volume Rendering
     plt.figure(figsize=(4,4), dpi=500)
     
+    print (image.shape)
+    
     plt.imshow(image)
     plt.axis('off')
     
