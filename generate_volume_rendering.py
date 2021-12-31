@@ -40,7 +40,7 @@ def main():
     
     # this is where the image array is produced
     image = volume_renderer.render_volume((x,y,z), datacube, (0.0, np.pi/3.0), \
-                                          N=180, transferFunction=gaussianTransferFunction)
+                                          N=180, transferFunction=quadraticTransferFunction)
 
     # Plot Volume Rendering
     plt.figure(figsize=(4,4), dpi=500)
