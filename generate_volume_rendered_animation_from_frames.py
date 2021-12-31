@@ -66,13 +66,13 @@ def animate(i):
 def main():
 
     # Plot Volume Rendering
-    fig = plt.figure(figsize=(4,4), dpi=500)
+    fig = plt.figure(figsize=(8,8), dpi=500)
         
     # Do Volume Rendering at Different Viewing Angles
     ani = animation.FuncAnimation(fig, animate, np.arange(len(sys.argv[1:])))
 
     f = "animation.gif" 
-    ani.save(f, writer='imagemagick', fps=30)
+    ani.save(f, writer='imagemagick', fps=10)
 
     return 0
 
