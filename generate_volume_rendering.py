@@ -9,6 +9,8 @@ from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 import volume_renderer
 
+chosen_colormap = cm.get_cmap('inferno', 256)
+
 def gaussianTransferFunction(x0, **kwargs):
     frac         = kwargs.get("frac")         if "frac"         in kwargs else 0.0
     max_opacity  = kwargs.get("max_opacity")  if "max_opacity"  in kwargs else 0.5
