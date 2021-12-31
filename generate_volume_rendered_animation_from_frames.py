@@ -22,7 +22,7 @@ def animate(i):
     points = (x, y, z)
 
     # this is where the image array is produced
-    image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/6.0), N=500)
+    image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/3.0), N=500)
         
     # z-axis in image points up by default
     # swap axes to get conventional heavy-ion orientation
@@ -36,13 +36,13 @@ def animate(i):
 def main():
 
     # Plot Volume Rendering
-    fig = plt.figure(figsize=(4,4), dpi=80)
+    fig = plt.figure(figsize=(4,4), dpi=500)
         
     # Do Volume Rendering at Different Viewing Angles
     ani = animation.FuncAnimation(fig, animate, np.arange(len(sys.argv[1:])))
 
     f = "animation.gif" 
-    ani.save(f, writer='imagemagick', fps=10)
+    ani.save(f, writer='imagemagick', fps=30)
 
     return 0
 
