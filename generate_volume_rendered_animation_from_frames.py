@@ -51,7 +51,7 @@ def animate(i):
     points = (x, y, z)
 
     # this is where the image array is produced
-    image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/4.0), \
+    image = volume_renderer.render_volume(points, datacube, (0.0, 0.0*np.pi/4.0), \
                                           N=180, transferFunction=linearTransferFunction)
         
     # z-axis in image points up by default
