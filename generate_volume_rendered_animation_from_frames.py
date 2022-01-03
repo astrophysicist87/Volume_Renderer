@@ -12,9 +12,18 @@ from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
 chosen_colormap = cm.get_cmap('inferno', 256)
 
+def theta(scale, location, x):
+    if x < 1e-3:
+        return 0.0
+    elif x > 1.0-1e-3:
+        return 1.0
+    else:
+        return 0.5*(1.0+np.tanh(a*(x-b)/(x*(1.0-x))))
+
 def gaussianTransferFunction(x0, **kwargs):
     frac         = kwargs.get("frac")         if "frac"         in kwargs else 0.0
     max_opacity  = kwargs.get("max_opacity")  if "max_opacity"  in kwargs else 0.5
+    tFO          = kwargs.get("tFO")          if "tFO"          in kwargs else 0.0
 
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
@@ -24,6 +33,7 @@ def gaussianTransferFunction(x0, **kwargs):
 def quadraticTransferFunction(x0, **kwargs):
     frac         = kwargs.get("frac")         if "frac"         in kwargs else 0.0
     max_opacity  = kwargs.get("max_opacity")  if "max_opacity"  in kwargs else 0.5
+    tFO          = kwargs.get("tFO")          if "tFO"          in kwargs else 0.0
 
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
@@ -33,6 +43,7 @@ def quadraticTransferFunction(x0, **kwargs):
 def linearTransferFunction(x0, **kwargs):
     frac         = kwargs.get("frac")         if "frac"         in kwargs else 0.0
     max_opacity  = kwargs.get("max_opacity")  if "max_opacity"  in kwargs else 0.5
+    tFO          = kwargs.get("tFO")          if "tFO"          in kwargs else 0.0
 
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
