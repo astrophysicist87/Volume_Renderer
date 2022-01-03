@@ -56,7 +56,7 @@ def main():
     
     
     # this is where the image array is produced
-    image = volume_renderer.render_volume((x,y,z), datacube, (0.0, np.pi/4.0), N=180, \
+    image = volume_renderer.render_volume((x,y,z), datacube, (0.0, np.pi/4.0), N=250, \
                                           transferFunction=linearTransferFunction)
 
     # Plot Volume Rendering
