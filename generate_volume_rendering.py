@@ -11,6 +11,14 @@ import volume_renderer
 
 chosen_colormap = cm.get_cmap('inferno', 256)
 
+def theta(scale, location, x):
+    if x < 1e-3:
+        return 0.0
+    elif x > 1.0-1e-3:
+        return 1.0
+    else:
+        return 0.5*(1.0+np.tanh(a*(x-b)/(x*(1.0-x))))
+
 def gaussianTransferFunction(x0, **kwargs):
     frac         = kwargs.get("frac")         if "frac"         in kwargs else 0.0
     max_opacity  = kwargs.get("max_opacity")  if "max_opacity"  in kwargs else 0.5
@@ -48,7 +56,7 @@ def main():
     
     
     # this is where the image array is produced
-    image = volume_renderer.render_volume((x,y,z), datacube, (0.0, np.pi/4.0), N=500, \
+    image = volume_renderer.render_volume((x,y,z), datacube, (0.0, np.pi/4.0), N=180, \
                                           transferFunction=linearTransferFunction)
 
     # Plot Volume Rendering
