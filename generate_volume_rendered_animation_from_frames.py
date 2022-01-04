@@ -89,7 +89,8 @@ def main():
     ani = animation.FuncAnimation(fig, animate, np.arange(len(sys.argv[1:])))
 
     f = "animation.mp4"
-    FFwriter = animation.FFMpegWriter(fps=20, extra_args=['-vcodec', 'libx264'])
+    #FFwriter = animation.FFMpegWriter(fps=20, extra_args=['-vcodec', 'libx264'])
+    FFwriter = animation.FFMpegWriter(fps=6)
     ani.save(f, writer=FFwriter)
     #f = "animation.gif" 
     #ani.save(f, writer='imagemagick', fps=20)
