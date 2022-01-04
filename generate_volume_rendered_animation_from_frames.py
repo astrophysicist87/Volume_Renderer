@@ -20,7 +20,8 @@ def theta(scale, location, x):
     #    return 1.0
     #else:
     #    return 0.5*(1.0+np.tanh(a*(x-b)/(x*(1.0-x))))
-    return np.piecewise(x, [x < 1e-3, x > 1.0-1e-3], [0.0, 1.0, 0.5*(1.0+np.tanh(a*(x-b)/(x*(1.0-x))))])
+    return np.piecewise(x, [x < 1e-3, x > 1.0-1e-3], \
+                           [0.0, 1.0, lambda x: 0.5*(1.0+np.tanh(scale*(x-location)/(x*(1.0-x))))])
 
 def gaussianTransferFunction(x0, **kwargs):
     frac         = kwargs.get("frac")         if "frac"         in kwargs else 0.0
