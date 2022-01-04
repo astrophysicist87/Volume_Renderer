@@ -28,7 +28,7 @@ def gaussianTransferFunction(x0, **kwargs):
 
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
-    a = max_opacity*np.exp( -6.0*(x - 1.0)**2 )
+    a = max_opacity*np.exp( -6.0*(x - 1.0)**2 )*theta(25.0, cutoff, x)
     return r,g,b,a
 
 def quadraticTransferFunction(x0, **kwargs):
@@ -38,7 +38,7 @@ def quadraticTransferFunction(x0, **kwargs):
 
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
-    a = max_opacity*x**2
+    a = max_opacity*x**2*theta(25.0, cutoff, x)
     return r,g,b,a
 
 def linearTransferFunction(x0, **kwargs):
@@ -48,8 +48,10 @@ def linearTransferFunction(x0, **kwargs):
 
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
-    a = max_opacity*x
+    a = max_opacity*x*theta(25.0, cutoff, x)
     return r,g,b,a
+
+
 
 def animate(i):
     global maximum
@@ -67,9 +69,10 @@ def animate(i):
         maximum = np.amax(datacube)
 
     # this is where the image array is produced
+    TFO = 0.154 # freeze-out temperature in GeV
     image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/4.0), N=250, \
                                           transferFunction=quadraticTransferFunction,
-                                          scale_max=maximum)
+                                          scale_max=maximum, cutoff=TFO)
         
     # z-axis in image points up by default
     # swap axes to get conventional heavy-ion orientation
@@ -89,8 +92,7 @@ def main():
     ani = animation.FuncAnimation(fig, animate, np.arange(len(sys.argv[1:])))
 
     f = "animation.mp4"
-    #FFwriter = animation.FFMpegWriter(fps=20, extra_args=['-vcodec', 'libx264'])
-    FFwriter = animation.FFMpegWriter(fps=6)
+    FFwriter = animation.FFMpegWriter(fps=6, extra_args=['-vcodec', 'libx264'])
     ani.save(f, writer=FFwriter)
     #f = "animation.gif" 
     #ani.save(f, writer='imagemagick', fps=20)
