@@ -52,6 +52,7 @@ def linearTransferFunction(x0, **kwargs):
     return r,g,b,a
 
 def animate(i):
+    global maximum
     print('Rendering Scene ' + str(i+1) + ' of ' + str(len(sys.argv[1:])), flush=True)
 
     # Load Datacube
