@@ -30,7 +30,7 @@ def gaussianTransferFunction(x0, **kwargs):
 
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
-    a = max_opacity*np.exp( -6.0*(x - 1.0)**2 )*theta(1.0, cutoff, x)
+    a = max_opacity*np.exp( -6.0*(x - 1.0)**2 )*theta(25.0, cutoff, x)
     return r,g,b,a
 
 def quadraticTransferFunction(x0, **kwargs):
@@ -40,7 +40,7 @@ def quadraticTransferFunction(x0, **kwargs):
 
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
-    a = max_opacity*x**2*theta(1.0, cutoff, x)
+    a = max_opacity*x**2*theta(25.0, cutoff, x)
     return r,g,b,a
 
 def linearTransferFunction(x0, **kwargs):
@@ -50,7 +50,7 @@ def linearTransferFunction(x0, **kwargs):
 
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
-    a = max_opacity*x*theta(1.0, cutoff, x)
+    a = max_opacity*x*theta(25.0, cutoff, x)
     return r,g,b,a
 
 
