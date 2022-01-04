@@ -93,7 +93,7 @@ def render_volume(points, datacube, angles, **kwargs):
         for dataslice in camera_grid:
             log_dataslice = np.log(dataslice)
             normed_log_dataslice = (log_dataslice-logmin)/(logmax-logmin)
-            r,g,b,a = transferFunction(normed_log_dataslice, cutoff=normed_log_cutoff)
+            r,g,b,a = transferFunction(normed_log_dataslice, cutoff=normed_log_cutoff, frac=normed_log_cutoff)
             image[:,:,0] = a*r + (1-a)*image[:,:,0]
             image[:,:,1] = a*g + (1-a)*image[:,:,1]
             image[:,:,2] = a*b + (1-a)*image[:,:,2]
@@ -103,7 +103,7 @@ def render_volume(points, datacube, angles, **kwargs):
         normed_cutoff = (cutoff-minimum)/(maximum-minimum)
         for dataslice in camera_grid:
             normed_dataslice = (dataslice - minimum)/(maximum - minimum)
-            r,g,b,a = transferFunction(normed_dataslice, cutoff=normed_cutoff)
+            r,g,b,a = transferFunction(normed_dataslice, cutoff=normed_cutoff, frac=normed_cutoff)
             image[:,:,0] = a*r + (1-a)*image[:,:,0]
             image[:,:,1] = a*g + (1-a)*image[:,:,1]
             image[:,:,2] = a*b + (1-a)*image[:,:,2]
