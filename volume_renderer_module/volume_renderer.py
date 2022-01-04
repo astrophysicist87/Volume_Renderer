@@ -12,6 +12,14 @@ from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 #chosen_colormap = cm.get_cmap('magma', 256)
 chosen_colormap = cm.get_cmap('inferno', 256)
 
+def theta(scale, location, x):
+    if x < 1e-3:
+        return 0.0
+    elif x > 1.0-1e-3:
+        return 1.0
+    else:
+        return 0.5*(1.0+np.tanh(a*(x-b)/(x*(1.0-x))))
+
 def enhance_channel(a, f, no_clip=False):
     '''
     f enhances RGB colors
@@ -46,11 +54,9 @@ def render_volume(points, datacube, angles, **kwargs):
     # Datacube Grid
     Nx, Ny, Nz = datacube.shape
     
+    cutoff = kwargs.get("cutoff") if "cutoff" in kwargs else 0.0
+
     datacube += 1e-15
-    minimum = np.amin(datacube)
-    maximum = np.amax(datacube)
-    logmin = np.amin(np.log(datacube))
-    logmax = np.amax(np.log(datacube))
 
     phi, theta = angles
     N = kwargs.get("N") if "N" in kwargs else 180
@@ -81,17 +87,23 @@ def render_volume(points, datacube, angles, **kwargs):
                                                         else False
     
     if use_log_densities:
+        logmin  = np.log(kwargs.get("scale_min")) if "scale_min" in kwargs else np.amin(np.log(datacube))
+        logmax  = np.log(kwargs.get("scale_max")) if "scale_max" in kwargs else np.amax(np.log(datacube))
+        normed_log_cutoff = (np.log(cutoff)-logmin)/(logmax-logmin)
         for dataslice in camera_grid:
             log_dataslice = np.log(dataslice)
             normed_log_dataslice = (log_dataslice-logmin)/(logmax-logmin)
-            r,g,b,a = transferFunction(normed_log_dataslice)
+            r,g,b,a = transferFunction(normed_log_dataslice, cutoff=normed_log_cutoff)
             image[:,:,0] = a*r + (1-a)*image[:,:,0]
             image[:,:,1] = a*g + (1-a)*image[:,:,1]
             image[:,:,2] = a*b + (1-a)*image[:,:,2]
     else:
+        minimum = kwargs.get("scale_min") if "scale_min" in kwargs else np.amin(datacube)
+        maximum = kwargs.get("scale_max") if "scale_max" in kwargs else np.amax(datacube)    
+        normed_cutoff = (cutoff-minimum)/(maximum-minimum)
         for dataslice in camera_grid:
             normed_dataslice = (dataslice - minimum)/(maximum - minimum)
-            r,g,b,a = transferFunction(normed_dataslice)
+            r,g,b,a = transferFunction(normed_dataslice, cutoff=normed_cutoff)
             image[:,:,0] = a*r + (1-a)*image[:,:,0]
             image[:,:,1] = a*g + (1-a)*image[:,:,1]
             image[:,:,2] = a*b + (1-a)*image[:,:,2]

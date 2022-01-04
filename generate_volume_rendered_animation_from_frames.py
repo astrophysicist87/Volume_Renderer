@@ -23,7 +23,7 @@ def theta(scale, location, x):
 def gaussianTransferFunction(x0, **kwargs):
     frac         = kwargs.get("frac")         if "frac"         in kwargs else 0.0
     max_opacity  = kwargs.get("max_opacity")  if "max_opacity"  in kwargs else 0.5
-    tFO          = kwargs.get("tFO")          if "tFO"          in kwargs else 0.0
+    cutoff       = kwargs.get("cutoff")       if "cutoff"       in kwargs else 0.0
 
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
@@ -33,7 +33,7 @@ def gaussianTransferFunction(x0, **kwargs):
 def quadraticTransferFunction(x0, **kwargs):
     frac         = kwargs.get("frac")         if "frac"         in kwargs else 0.0
     max_opacity  = kwargs.get("max_opacity")  if "max_opacity"  in kwargs else 0.5
-    tFO          = kwargs.get("tFO")          if "tFO"          in kwargs else 0.0
+    cutoff       = kwargs.get("cutoff")       if "cutoff"       in kwargs else 0.0
 
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
@@ -43,7 +43,7 @@ def quadraticTransferFunction(x0, **kwargs):
 def linearTransferFunction(x0, **kwargs):
     frac         = kwargs.get("frac")         if "frac"         in kwargs else 0.0
     max_opacity  = kwargs.get("max_opacity")  if "max_opacity"  in kwargs else 0.5
-    tFO          = kwargs.get("tFO")          if "tFO"          in kwargs else 0.0
+    cutoff       = kwargs.get("cutoff")       if "cutoff"       in kwargs else 0.0
 
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
@@ -60,10 +60,12 @@ def animate(i):
     z = np.array(f['z'])
     datacube = np.array(f['temperature'])
     points = (x, y, z)
+    
+    maximum = np.amax(datacube) if i==0
 
     # this is where the image array is produced
-    image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/4.0), \
-                                          N=500, transferFunction=quadraticTransferFunction)
+    image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/4.0), N=250, \
+                                          transferFunction=quadraticTransferFunction)
         
     # z-axis in image points up by default
     # swap axes to get conventional heavy-ion orientation
@@ -77,13 +79,13 @@ def animate(i):
 def main():
 
     # Plot Volume Rendering
-    fig = plt.figure(figsize=(8,8), dpi=500)
+    fig = plt.figure(figsize=(8,8), dpi=200)
         
     # Do Volume Rendering at Different Viewing Angles
     ani = animation.FuncAnimation(fig, animate, np.arange(len(sys.argv[1:])))
 
     f = "animation.gif" 
-    ani.save(f, writer='imagemagick', fps=10)
+    ani.save(f, writer='imagemagick', fps=20)
 
     return 0
 
