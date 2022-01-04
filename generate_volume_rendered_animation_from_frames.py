@@ -10,6 +10,7 @@ from scipy.interpolate import interpn
 from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
+maximum = 0.0
 chosen_colormap = cm.get_cmap('inferno', 256)
 
 def theta(scale, location, x):
@@ -61,7 +62,8 @@ def animate(i):
     datacube = np.array(f['temperature'])
     points = (x, y, z)
     
-    maximum = np.amax(datacube) if i==0 else maximum
+    if i==0:
+        maximum = np.amax(datacube)
 
     # this is where the image array is produced
     image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/4.0), N=250, \
