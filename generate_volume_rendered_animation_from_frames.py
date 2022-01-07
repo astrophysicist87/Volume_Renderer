@@ -11,7 +11,7 @@ from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
 maximum = 0.0
-chosen_colormap = cm.get_cmap('plasma', 256)
+chosen_colormap = cm.get_cmap('inferno', 256)
 
 def theta(scale, location, x):
     return np.piecewise(x, [x < 1e-3, x > 1.0-1e-3], \
