@@ -44,7 +44,7 @@ def linearTransferFunction(x0, **kwargs):
 
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
-    a = max_opacity*x*theta(100.0, cutoff, x)
+    a = max_opacity*x*theta(5.0, cutoff, x)
     return r,g,b,a
 
 
@@ -67,8 +67,8 @@ def animate(i):
     # this is where the image array is produced
     TFO = 0.154 # freeze-out temperature in GeV
     image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/4.0), N=100, \
-                                          transferFunction=linearTransferFunction,
-                                          scale_max=maximum, cutoff=TFO, max_opacity=0.25)
+                                          transferFunction=linearTransferFunction, \
+                                          scale_max=maximum, cutoff=TFO, max_opacity=0.05)
     
     # z-axis in image points up by default
     # swap axes to get conventional heavy-ion orientation
