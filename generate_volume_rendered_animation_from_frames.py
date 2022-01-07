@@ -44,6 +44,7 @@ def linearTransferFunction(x0, **kwargs):
 
     frac = cutoff
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
+    cutoff = np.clip(cutoff, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)  # maps cutoff --> 0
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
     a = max_opacity*x #*theta(100.0, cutoff, x)
     return r,g,b,a
