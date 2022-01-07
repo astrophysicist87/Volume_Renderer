@@ -11,15 +11,9 @@ from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
 maximum = 0.0
-chosen_colormap = cm.get_cmap('inferno', 12)
+chosen_colormap = cm.get_cmap('plasma', 256)
 
 def theta(scale, location, x):
-    #if x < 1e-3:
-    #    return 0.0
-    #elif x > 1.0-1e-3:
-    #    return 1.0
-    #else:
-    #    return 0.5*(1.0+np.tanh(a*(x-b)/(x*(1.0-x))))
     return np.piecewise(x, [x < 1e-3, x > 1.0-1e-3], \
                            [0.0, 1.0, lambda x: 0.5*(1.0+np.tanh(scale*(x-location)/(x*(1.0-x))))])
 
@@ -40,7 +34,7 @@ def quadraticTransferFunction(x0, **kwargs):
 
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
-    a = max_opacity*x**2  #*theta(25.0, cutoff, x)
+    a = max_opacity*x**2
     return r,g,b,a
 
 def linearTransferFunction(x0, **kwargs):
@@ -50,7 +44,7 @@ def linearTransferFunction(x0, **kwargs):
 
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
-    a = max_opacity*x
+    a = max_opacity*x*theta(100.0, cutoff, x)
     return r,g,b,a
 
 
@@ -74,7 +68,7 @@ def animate(i):
     TFO = 0.154 # freeze-out temperature in GeV
     image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/4.0), N=100, \
                                           transferFunction=linearTransferFunction,
-                                          scale_max=maximum, cutoff=TFO)
+                                          scale_max=maximum, cutoff=TFO, max_opacity=0.25)
     
     # z-axis in image points up by default
     # swap axes to get conventional heavy-ion orientation
@@ -95,7 +89,7 @@ def main():
 
     f = "animation.mp4"
     FFwriter = animation.FFMpegWriter(fps=10, extra_args=['-vcodec', 'libx264'])
-    ani.save(f, writer=FFwriter, savefig_kwargs={'facecolor':fig.get_facecolor(), 'edgecolor':'none'})
+    ani.save(f, writer=FFwriter)
     #f = "animation.gif" 
     #ani.save(f, writer='imagemagick', fps=20)
 
