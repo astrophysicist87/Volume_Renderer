@@ -80,7 +80,7 @@ def animate(i):
     # swap axes to get conventional heavy-ion orientation
     image = np.swapaxes(image, 0, 1)
 
-    plt.imshow(image, interpolation='hermite')
+    plt.imshow(image, interpolation='bicubic')
     plt.axis('off')
 
 
