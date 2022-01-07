@@ -54,6 +54,7 @@ def constantTransferFunction(x0, **kwargs):
     max_opacity  = kwargs.get("max_opacity")  if "max_opacity"  in kwargs else 0.5
     cutoff       = kwargs.get("cutoff")       if "cutoff"       in kwargs else 0.0
 
+    frac = cutoff
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     cutoff = np.clip(cutoff, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
