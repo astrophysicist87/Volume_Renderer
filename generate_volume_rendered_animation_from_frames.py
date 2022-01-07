@@ -95,7 +95,7 @@ def main():
 
     f = "animation.mp4"
     FFwriter = animation.FFMpegWriter(fps=10, extra_args=['-vcodec', 'libx264'])
-    ani.save(f, writer=FFwriter)
+    ani.save(f, writer=FFwriter, savefig_kwargs=[facecolor=fig.get_facecolor(), edgecolor='none'])
     #f = "animation.gif" 
     #ani.save(f, writer='imagemagick', fps=20)
 
