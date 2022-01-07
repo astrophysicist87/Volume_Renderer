@@ -82,8 +82,8 @@ def animate(i):
     # this is where the image array is produced
     TFO = 0.154 # freeze-out temperature in GeV
     image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/4.0), N=100, \
-                                          transferFunction=constantTransferFunction, \
-                                          scale_max=maximum, cutoff=TFO, max_opacity=0.5)
+                                          transferFunction=linearTransferFunction, \
+                                          scale_max=maximum, cutoff=TFO)
     
     # z-axis in image points up by default
     # swap axes to get conventional heavy-ion orientation
