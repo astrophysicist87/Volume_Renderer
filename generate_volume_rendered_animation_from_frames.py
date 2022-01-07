@@ -11,7 +11,7 @@ from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
 maximum = 0.0
-chosen_colormap = cm.get_cmap('inferno', 256)
+chosen_colormap = cm.get_cmap('inferno', 12)
 
 def theta(scale, location, x):
     #if x < 1e-3:
@@ -80,7 +80,7 @@ def animate(i):
     # swap axes to get conventional heavy-ion orientation
     image = np.swapaxes(image, 0, 1)
 
-    plt.imshow(image, interpolation='bicubic')
+    plt.imshow(image, interpolation='hermite')
     plt.axis('off')
 
 
