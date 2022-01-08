@@ -102,11 +102,11 @@ def main():
     # Do Volume Rendering at Different Viewing Angles
     ani = animation.FuncAnimation(fig, animate, np.arange(len(sys.argv[1:])))
 
-    f = "animation.mp4"
-    FFwriter = animation.FFMpegWriter(fps=10, extra_args=['-vcodec', 'libx264'])
-    ani.save(f, writer=FFwriter)
-    #f = "animation.gif" 
-    #ani.save(f, writer='imagemagick', fps=20)
+    #f = "animation.mp4"
+    #FFwriter = animation.FFMpegWriter(fps=10, extra_args=['-vcodec', 'libx264'])
+    #ani.save(f, writer=FFwriter)
+    f = "animation.gif" 
+    ani.save(f, writer='imagemagick', fps=10)
 
     return 0
 
