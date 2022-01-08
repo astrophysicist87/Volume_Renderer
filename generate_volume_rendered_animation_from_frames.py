@@ -89,7 +89,8 @@ def animate(i):
     # swap axes to get conventional heavy-ion orientation
     image = np.swapaxes(image, 0, 1)
 
-    plt.imshow(image, interpolation='bicubic')
+    plt.imshow(image)
+    plt.savefig('animation_frames/frame' + str(i) + '.png', dpi=500, bbox_inches='tight', pad_inches = 0)
     plt.axis('off')
 
 
@@ -102,11 +103,11 @@ def main():
     # Do Volume Rendering at Different Viewing Angles
     ani = animation.FuncAnimation(fig, animate, np.arange(len(sys.argv[1:])))
 
-    #f = "animation.mp4"
-    #FFwriter = animation.FFMpegWriter(fps=10, extra_args=['-vcodec', 'libx264'])
-    #ani.save(f, writer=FFwriter)
-    f = "animation.gif" 
-    ani.save(f, writer='imagemagick', fps=10)
+    f = "animation.mp4"
+    FFwriter = animation.FFMpegWriter(fps=10, extra_args=['-vcodec', 'libx264'])
+    ani.save(f, writer=FFwriter)
+    #f = "animation.gif" 
+    #ani.save(f, writer='imagemagick', fps=10)
 
     return 0
 
