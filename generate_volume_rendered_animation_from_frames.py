@@ -81,7 +81,7 @@ def animate(i):
 
     # this is where the image array is produced
     TFO = 0.154 # freeze-out temperature in GeV
-    image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/4.0), N=500, \
+    image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/4.0), N=100, \
                                           transferFunction=linearTransferFunction, \
                                           scale_max=maximum, cutoff=TFO)
     
@@ -99,6 +99,8 @@ def main():
 
     # Plot Volume Rendering
     fig = plt.figure(figsize=(8,8), dpi=500)
+    #plt.subplots_adjust(top=1, bottom=0, right=1, left=0, hspace=0, wspace=0)
+    plt.margins(0, 0)
         
     # Do Volume Rendering at Different Viewing Angles
     ani = animation.FuncAnimation(fig, animate, np.arange(len(sys.argv[1:])))
