@@ -66,8 +66,8 @@ def constantTransferFunction(x0, **kwargs):
 
 def init():
     image = np.zeros((image_pixel_dimension, image_pixel_dimension))
-    plt.imshow(image)
     plt.axis('off')
+    return plt.imshow(image)
 
 
 def animate(i):
@@ -96,9 +96,10 @@ def animate(i):
     # swap axes to get conventional heavy-ion orientation
     image = np.swapaxes(image, 0, 1)
 
-    plt.imshow(image)
-    plt.savefig('animation_frames/frame' + str(i) + '.png', dpi=500, bbox_inches='tight', pad_inches = 0)
+    im = plt.imshow(image)
     plt.axis('off')
+    plt.savefig('animation_frames/frame' + str(i) + '.png', dpi=500, bbox_inches='tight', pad_inches = 0)
+    return im
 
 
 
