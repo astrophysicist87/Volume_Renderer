@@ -65,7 +65,9 @@ def constantTransferFunction(x0, **kwargs):
 
 
 def init():
-    return np.zeros((image_pixel_dimension, image_pixel_dimension))
+    image = np.zeros((image_pixel_dimension, image_pixel_dimension))
+    plt.imshow(image)
+    plt.axis('off')
 
 
 def animate(i):
@@ -108,7 +110,8 @@ def main():
     plt.margins(0, 0)
         
     # Do Volume Rendering at Different Viewing Angles
-    ani = animation.FuncAnimation(fig, animate, np.arange(len(sys.argv[1:])), blit=True)
+    ani = animation.FuncAnimation(fig, animate, np.arange(len(sys.argv[1:])), \
+                                  init_func=init, blit=True)
 
     f = "animation_log_ed.mp4"
     FFwriter = animation.FFMpegWriter(fps=10, extra_args=['-vcodec', 'libx264'])
