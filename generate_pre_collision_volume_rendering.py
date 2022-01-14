@@ -119,7 +119,7 @@ def main():
     #plt.colorbar(im, cax=cax)
     
     # Save figure
-    plt.savefig('all_frames/pre_collisions_frames/frame_'+str(tStep)+'.png',\
+    plt.savefig('all_frames/pre_collision_frames/frame_'+str(tStep)+'.png',\
                 dpi=500, bbox_inches='tight', pad_inches = 0)
     #plt.show()
         
