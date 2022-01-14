@@ -64,12 +64,11 @@ for iFrame, frame in enumerate(data):
         final = np.dstack((final, output))
         print(final.shape)
         
+# reshape and sort
+final = final.reshape([Nx*Ny*Nz,5])
+final = final[final[:, 0].argsort()]
 
-print(final.shape)
-
-
-
-
+np.savetxt('see_if_it_works.dat', final, fmt="%lf")
 
 
 
