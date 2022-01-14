@@ -73,17 +73,18 @@ def animate(i):
     x = np.array(f['x'])
     y = np.array(f['y'])
     z = np.array(f['z'])
-    datacube = np.array(f['temperature'])
+    datacube = np.array(f['energy_density'])
     points = (x, y, z)
     
     if i==0:
         maximum = np.amax(datacube)
 
     # this is where the image array is produced
+    eFO = 0.266 # freeze-out temperature in GeV
     TFO = 0.154 # freeze-out temperature in GeV
     image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/4.0), N=500, \
                                           transferFunction=linearTransferFunction, \
-                                          scale_max=maximum, cutoff=TFO)
+                                          scale_max=maximum, cutoff=TFO, use_log_densities=True)
     
     # z-axis in image points up by default
     # swap axes to get conventional heavy-ion orientation

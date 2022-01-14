@@ -1,6 +1,6 @@
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
+#import matplotlib
+#matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import h5py as h5
 import sys
@@ -54,9 +54,10 @@ def render_volume(points, datacube, angles, **kwargs):
     # Datacube Grid
     Nx, Ny, Nz = datacube.shape
     
-    cutoff = kwargs.get("cutoff") if "cutoff" in kwargs else 0.0
-
     datacube += 1e-15
+
+    cutoff     = kwargs.get("cutoff")     if "cutoff"     in kwargs else 0.0
+    fill_value = kwargs.get("fill_value") if "fill_value" in kwargs else np.amin(datacube)
 
     phi, theta = angles
     N = kwargs.get("N") if "N" in kwargs else 180
@@ -72,7 +73,7 @@ def render_volume(points, datacube, angles, **kwargs):
 
     # Interpolate onto Camera Grid
     camera_grid = interpn(points, datacube, qi, method='linear',\
-                                  bounds_error=False, fill_value=np.amin(datacube)\
+                                  bounds_error=False, fill_value=fill_value\
                                  ).reshape((N,N,N))
     
     # Do Volume Rendering
@@ -101,12 +102,16 @@ def render_volume(points, datacube, angles, **kwargs):
         minimum = kwargs.get("scale_min") if "scale_min" in kwargs else np.amin(datacube)
         maximum = kwargs.get("scale_max") if "scale_max" in kwargs else np.amax(datacube)    
         normed_cutoff = (cutoff-minimum)/(maximum-minimum)
+        #print(minimum, maximum, normed_cutoff)
         for dataslice in camera_grid:
             normed_dataslice = (dataslice - minimum)/(maximum - minimum)
+            #print('Dataslice:', np.amin(dataslice),np.amax(dataslice),\
+            #      np.amin(normed_dataslice),np.amax(normed_dataslice))
             r,g,b,a = transferFunction(normed_dataslice, cutoff=normed_cutoff)
             image[:,:,0] = a*r + (1-a)*image[:,:,0]
             image[:,:,1] = a*g + (1-a)*image[:,:,1]
             image[:,:,2] = a*b + (1-a)*image[:,:,2]
-                    
+
+                                        
     return np.swapaxes( np.clip(image, 0.0, 1.0), 0, 1)
 
