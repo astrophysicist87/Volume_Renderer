@@ -48,7 +48,7 @@ for iFrame, frame in enumerate(data):
         unelapsed_taus = tauRange[iFrame:]
         zpts = np.sqrt(unelapsed_taus**2 - t**2)
         zpts = np.unique(np.concatenate((-zpts[::-1],zpts)))
-        tpts = np.unique(np.concatenate((-unelapsed_taus[::-1],unelapsed_taus)))
+        tpts = np.unique(np.concatenate((unelapsed_taus[::-1],unelapsed_taus)))
         Nz = len(zpts)
         
         output = np.tile(frame,(Nz,1,1))
