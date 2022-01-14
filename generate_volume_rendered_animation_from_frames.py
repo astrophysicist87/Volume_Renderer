@@ -10,6 +10,7 @@ from scipy.interpolate import interpn
 from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
+image_pixel_dimension = 500
 maximum = 0.0
 chosen_colormap = cm.get_cmap('inferno', 256)
 
@@ -63,6 +64,9 @@ def constantTransferFunction(x0, **kwargs):
     return r,g,b,a
 
 
+def init():
+    return np.zeros((image_pixel_dimension, image_pixel_dimension))
+
 
 def animate(i):
     global maximum
@@ -82,7 +86,7 @@ def animate(i):
     # this is where the image array is produced
     eFO = 0.266 # freeze-out temperature in GeV
     TFO = 0.154 # freeze-out temperature in GeV
-    image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/4.0), N=500, \
+    image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/4.0), N=image_pixel_dimension, \
                                           transferFunction=linearTransferFunction, \
                                           scale_max=maximum, cutoff=TFO, use_log_densities=True)
     
@@ -104,7 +108,7 @@ def main():
     plt.margins(0, 0)
         
     # Do Volume Rendering at Different Viewing Angles
-    ani = animation.FuncAnimation(fig, animate, np.arange(len(sys.argv[1:])))
+    ani = animation.FuncAnimation(fig, animate, np.arange(len(sys.argv[1:])), blit=True)
 
     f = "animation_log_ed.mp4"
     FFwriter = animation.FFMpegWriter(fps=10, extra_args=['-vcodec', 'libx264'])
