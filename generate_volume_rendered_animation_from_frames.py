@@ -66,8 +66,9 @@ def constantTransferFunction(x0, **kwargs):
 
 def init():
     image = np.zeros((image_pixel_dimension, image_pixel_dimension))
+    im = plt.imshow(image)
     plt.axis('off')
-    return plt.imshow(image)
+    return im,
 
 
 def animate(i):
@@ -99,7 +100,7 @@ def animate(i):
     im = plt.imshow(image)
     plt.axis('off')
     plt.savefig('animation_frames/frame' + str(i) + '.png', dpi=500, bbox_inches='tight', pad_inches = 0)
-    return im
+    return im,
 
 
 
