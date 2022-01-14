@@ -104,7 +104,7 @@ def main():
     plt.margins(0, 0)
         
     # Do Volume Rendering at Different Viewing Angles
-    ani = animation.FuncAnimation(fig, animate, np.arange(len(sys.argv[1:])))
+    ani = animation.FuncAnimation(fig, animate, np.arange(len(sys.argv[1:])), blit=True)
 
     f = "animation_log_ed.mp4"
     FFwriter = animation.FFMpegWriter(fps=10, extra_args=['-vcodec', 'libx264'])
