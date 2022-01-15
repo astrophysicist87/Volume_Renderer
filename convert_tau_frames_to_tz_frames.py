@@ -2,14 +2,14 @@ import h5py as h5
 import numpy as np
 import sys
 
-def output_to_text(iFrame, data_in):
-    data = np.copy(data_in.reshape([data_in.size//5,5]))
+def output_to_text(iFrame, data):
+    data = data.reshape([data.size//5,5])
     data = data[np.lexsort((data[:,3], data[:,2], data[:,1], data[:,0]))]
     np.savetxt('all_frames/post_collision_frames_vs_t/frame_' \
                + str(iFrame) + '.dat', data, fmt="%lf")
     
-def output_to_hdf5(iFrame, data_in):
-    data = np.copy(data_in.reshape([data_in.size//5,5]))
+def output_to_hdf5(iFrame, data):
+    data = data.reshape([data.size//5,5])
     data = data[np.lexsort((data[:,3], data[:,2], data[:,1], data[:,0]))]
     outfilename = 'all_frames/post_collision_frames_vs_t/frame_' \
                   + str(iFrame).zfill(4) + '.h5'
