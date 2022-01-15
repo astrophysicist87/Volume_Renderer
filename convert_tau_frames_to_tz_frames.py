@@ -55,6 +55,7 @@ for iFrame, frame in enumerate(data):
         zpts = np.concatenate((-zpts[-1:0:-1],zpts))
         tpts = np.concatenate((unelapsed_ts[-1:0:-1],unelapsed_ts))
         print('tpts=',tpts)
+        print('zpts=',zpts)
         Nz = len(zpts)
         
         output = np.tile(frame,(Nz,1,1))
