@@ -10,7 +10,9 @@ def output_to_text(iFrame, data):
     
 def output_to_hdf5(iFrame, data):
     print("\t\t (A)",flush=True)
+    print(data.shape,flush=True)
     data = data.reshape([data.size//5,5])
+    print(data.shape,flush=True)
     data = data[np.lexsort((data[:,3], data[:,2], data[:,1], data[:,0]))]
     outfilename = 'all_frames/post_collision_frames_vs_t/frame_' \
                   + str(iFrame).zfill(4) + '.h5'
