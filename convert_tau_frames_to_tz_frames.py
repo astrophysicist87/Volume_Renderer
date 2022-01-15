@@ -61,7 +61,8 @@ for iFrame, frame in enumerate(data):
         
         # re-shape to (Nx,Ny,Nz,5) and set column order to t, x, y, z, e
         #output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[0,2,3,1,4]]
-        final = np.copy(output[:,:,[0,2,3,1,4]])
+        #final = np.copy(output[:,:,[0,2,3,1,4]])
+        final = np.copy((output.reshape((Nx*Ny*Nz,5)))[:,[0,2,3,1,4]])
 
     print("\t - set up", flush=True)
     unelapsed_ts = tRange[iFrame:]
@@ -91,11 +92,13 @@ for iFrame, frame in enumerate(data):
     print("\t - stacking", flush=True)
     #final = np.dstack((final, output))
     # stack along first axis
-    final = np.vstack((final, output[:,:,[0,2,3,1,4]])) # just re-arrange columns since sort is done later
+    #final = np.vstack((final, output[:,:,[0,2,3,1,4]])) # just re-arrange columns since sort is done later
+    final = np.vstack((final, (output.reshape((Nx*Ny*Nz,5)))[:,[0,2,3,1,4]])) # just re-arrange columns since sort is done later
     
     print("\t - printing", flush=True)
     print(final.shape)
-    elements_to_print = np.isclose(final[:,:,0],t)
+    #elements_to_print = np.isclose(final[:,:,0],t)
+    elements_to_print = np.isclose(final[:,0],t)
     #print("1",elements_to_print.shape)
     #print("2a",final[elements_to_print].shape)
     #output_to_text(iFrame, final[elements_to_print])
@@ -104,7 +107,7 @@ for iFrame, frame in enumerate(data):
     print("\t\t (Cb)",flush=True)
     final = final[np.logical_not(elements_to_print)]
     print("\t\t (D)",flush=True)
-    final = final.reshape([final.size//(Nx*Ny*5),Nx*Ny,5])
+    #final = final.reshape([final.size//(Nx*Ny*5),Nx*Ny,5])
     print("\t\t (E)",flush=True)
     #print("3",final.shape)
     print(final.shape)
