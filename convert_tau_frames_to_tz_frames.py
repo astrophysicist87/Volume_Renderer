@@ -66,7 +66,7 @@ tRange = np.copy(tauRange)
 final = None
 
 for iFrame, frame in enumerate(data):
-    t = tau = frame[0,1]
+    t = tau = frame[0,0]
     print('Processing tau =', tau, flush=True)
     if iFrame == 0:
         # add 2 extra z slices for initial timestep
