@@ -48,8 +48,8 @@ for iFrame, frame in enumerate(data):
     #for iz, zSlice in enumerate(output):
     #    zSlice[:,0] = np.full_like( zSlice[:,0], tpts[iz] )
     #    zSlice[:,1] = np.full_like( zSlice[:,1], zpts[iz] )
-    output[:,:,0] = tpts
-    output[:,:,1] = zpts
+    output[:,:,0] = tpts[:,np.newaxis]
+    output[:,:,1] = zpts[:,np.newaxis]
     
     # re-shape to (Nx,Ny,Nz,5) and set column order to t, x, y, z, e
     output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[0,2,3,1,4]]
