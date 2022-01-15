@@ -71,7 +71,8 @@ for iFrame, frame in enumerate(data):
     
     print("\t - printing", flush=True)
     print(final.shape)
-    output_to_text(iFrame, final[np.where(np.isclose(final[:,:,:,0],t))])
+    #output_to_text(iFrame, final[np.where(np.isclose(final[:,:,:,0],t))])
+    output_to_text(iFrame, final[np.isclose(final[:,:,:,0],t)])
     print(final.shape)
         
 
