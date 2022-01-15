@@ -7,6 +7,22 @@ def output_to_text(iFrame, data_in):
     data = data[np.lexsort((data[:,3], data[:,2], data[:,1], data[:,0]))]
     np.savetxt('all_frames/post_collision_frames_vs_t/frame_' \
                + str(iFrame) + '.dat', data, fmt="%lf")
+    
+def output_to_hdf5(iFrame, data_in):
+    data = np.copy(data_in.reshape([data_in.size//5,5]))
+    data = data[np.lexsort((data[:,3], data[:,2], data[:,1], data[:,0]))]
+    outfilename = 'all_frames/post_collision_frames_vs_t/frame_' \
+                  + str(iFrame).zfill(4) + '.h5'
+    hf = h5.File(outfilename, 'w')
+    datasize = len(data)
+    Nz = datasize//(Nx*Ny)
+    output = data.reshape(Nx,Ny,Nz,5)
+    hf.create_dataset('t', data = data[0,0])
+    hf.create_dataset('x', data = output[:,0,0,1])
+    hf.create_dataset('y', data = output[0,:,0,2])
+    hf.create_dataset('z', data = output[0,0,:,3])
+    hf.create_dataset('energy_density', data = output[:,:,:,4])
+    hf.close()
 
 print("Loading data", flush=True)
 
@@ -71,16 +87,16 @@ for iFrame, frame in enumerate(data):
     
     print("\t - printing", flush=True)
     print(final.shape)
-    #output_to_text(iFrame, final[np.where(np.isclose(final[:,:,:,0],t))])
     elements_to_print = np.isclose(final[:,:,:,0],t)
-    print("1",elements_to_print.shape)
-    print("2a",final[elements_to_print].shape)
-    output_to_text(iFrame, final[elements_to_print])
-    print("2b",final[elements_to_print].shape)
+    #print("1",elements_to_print.shape)
+    #print("2a",final[elements_to_print].shape)
+    #output_to_text(iFrame, final[elements_to_print])
+    output_to_hdf5(iFrame, final[elements_to_print])
+    #print("2b",final[elements_to_print].shape)
     final = final[np.logical_not(elements_to_print)]
     final = final.reshape([Nx,Ny,final.size//(Nx*Ny*5),5])
-    print("3",final.shape)
-    print(final.shape)
+    #print("3",final.shape)
+    #print(final.shape)
         
 
 
