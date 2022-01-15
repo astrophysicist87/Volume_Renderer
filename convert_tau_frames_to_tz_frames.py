@@ -70,7 +70,7 @@ for iFrame, frame in enumerate(data):
 
         # re-shape to (Nx,Ny,Nz,5) and set column order to t, x, y, z, e
         output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[0,2,3,1,4]]
-        print(final.shape, output.shape)
+        #print(final.shape, output.shape)
         if iFrame == 0:
             final = np.copy(output)
         else:
