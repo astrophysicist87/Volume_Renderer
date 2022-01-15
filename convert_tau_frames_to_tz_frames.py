@@ -2,6 +2,12 @@ import h5py as h5
 import numpy as np
 import sys
 
+def output_to_text(iFrame, data):
+    data = data.reshape([data.size//5,5])
+    data = data[np.lexsort((data[:,3], data[:,2], data[:,1], data[:,0]))]
+    np.savetxt('all_frames/post_collision_frames_vs_t/frame_' \
+               + str(iFrame) + '.dat', data, fmt="%lf")
+
 print("Loading data", flush=True)
 
 dxy = float(sys.argv[1])
@@ -62,7 +68,16 @@ for iFrame, frame in enumerate(data):
 
     print("\t - stacking", flush=True)
     final = np.dstack((final, output))
+    
+    print("\t - printing", flush=True)
+    print(final.shape)
+    output_to_text(iFrame, final[np.where(np.isclose(final[:,:,:,0],t))])
+    print(final.shape)
         
+
+
+
+'''
 # reshape and sort
 print('Reshape, sort, and split final array', flush=True)
 final = final.reshape([final.size//5,5])
@@ -71,13 +86,6 @@ final = final[np.lexsort((final[:,3], final[:,2], final[:,1], final[:,0]))]
 final = np.split(final, (np.where(np.diff(final[:,0])>1e-6)[0]+1).tolist())
 
 print('Saving results', flush=True)
-
-
-#for iTimeslice, timeslice in enumerate(final):
-#    print(iTimeslice, timeslice.shape)
-#    np.savetxt('all_frames/post_collision_frames_vs_t/frame_' \
-#               + str(iTimeslice) + '.dat', timeslice, fmt="%lf")
-
 
 for iTimeslice, timeslice in enumerate(final):
     outfilename = 'all_frames/post_collision_frames_vs_t/frame_' \
@@ -91,6 +99,6 @@ for iTimeslice, timeslice in enumerate(final):
     hf.create_dataset('y', data = output[0,:,0,2])
     hf.create_dataset('z', data = output[0,0,:,3])
     hf.create_dataset('energy_density', data = output[:,:,:,4])
-    hf.close()
+    hf.close()'''
     
 print('Done!')
