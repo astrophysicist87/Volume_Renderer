@@ -3,15 +3,15 @@ import numpy as np
 import sys
 
 def output_to_text(iFrame, data):
-    data = data.reshape([data.size//5,5])
+    #data = data.reshape([data.size//5,5])
     data = data[np.lexsort((data[:,3], data[:,2], data[:,1], data[:,0]))]
     np.savetxt('all_frames/post_collision_frames_vs_t/frame_' \
                + str(iFrame) + '.dat', data, fmt="%lf")
     
 def output_to_hdf5(iFrame, data):
     print("\t\t (A)",flush=True)
-    print(data.shape,flush=True)
-    data = data.reshape([data.size//5,5])
+    #print(data.shape,flush=True)
+    #data = data.reshape([data.size//5,5])
     print(data.shape,flush=True)
     data = data[np.lexsort((data[:,3], data[:,2], data[:,1], data[:,0]))]
     outfilename = 'all_frames/post_collision_frames_vs_t/frame_' \
@@ -94,7 +94,7 @@ for iFrame, frame in enumerate(data):
     final = np.vstack((final, output[:,:,[0,2,3,1,4]])) # just re-arrange columns since sort is done later
     
     print("\t - printing", flush=True)
-    #print(final.shape)
+    print(final.shape)
     elements_to_print = np.isclose(final[:,:,0],t)
     #print("1",elements_to_print.shape)
     #print("2a",final[elements_to_print].shape)
@@ -107,7 +107,7 @@ for iFrame, frame in enumerate(data):
     final = final.reshape([final.size//(Nx*Ny*5),Nx*Ny,5])
     print("\t\t (E)",flush=True)
     #print("3",final.shape)
-    #print(final.shape)
+    print(final.shape)
         
 
 
