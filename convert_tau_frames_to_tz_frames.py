@@ -15,11 +15,12 @@ def output_to_text(iFrame, data_in, alldata):
     print(data.shape)
     data = np.c_[ data, np.zeros((len(data),3)) ]
     print(data.shape)
-    bigdata = np.swapaxes(np.tile(data,(Nx*Ny,1,1)), 0, 2)
-    print(bigdata.shape)
+    print(data)
+    bigdata = np.transpose(np.tile(data,(Nx*Ny,1,1)), (1,2,0))
+    print("bigdata.shape=",bigdata.shape)
     print(alldata.shape)
-    for tauslice in bigdata:
-        print(tauslice.shape)
+    #for tauslice in bigdata:
+    #    tauslice[
     exit(1)
     
     
