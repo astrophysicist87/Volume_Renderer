@@ -46,6 +46,7 @@ for iFrame, frame in enumerate(data):
         final = np.copy(output)
     else:
         unelapsed_ts = tRange[iFrame:]
+        print(unelapsed_ts)
         zpts = np.sqrt(unelapsed_ts**2 - tau**2)
         zpts = np.concatenate((-zpts[-1:0:-1],zpts))
         tpts = np.concatenate((unelapsed_ts[-1:0:-1],unelapsed_ts))
