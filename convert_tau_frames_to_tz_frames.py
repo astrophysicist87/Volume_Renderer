@@ -77,7 +77,7 @@ for iFrame, frame in enumerate(data):
         #output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[0,2,3,1,4]]
         final = np.copy(output)
 
-    print("\t - set up", flush=True)
+    #print("\t - set up", flush=True)
     unelapsed_ts = tRange[iFrame:]
     unelapsed_tinds = np.arange(len(tRange))[iFrame:]
     #print(unelapsed_ts)
@@ -91,22 +91,22 @@ for iFrame, frame in enumerate(data):
     #print('zpts =',zpts)
     Nz = len(zpts)
     
-    print("\t - tiling", flush=True)
+    #print("\t - tiling", flush=True)
     #output = np.tile(frame,(Nz,1,1))
     output = np.full((Nz,4), float(iFrame))
 
-    print("\t - filling", flush=True)
+    #print("\t - filling", flush=True)
     # set 0th column to t coordinate, 1st column to z coordinate
     #print(output.shape, tpts.shape, zpts.shape)
     output[:,0] = tinds
     output[:,1] = tpts
     output[:,2] = zpts
     
-    print("\t - stacking", flush=True)
+    #print("\t - stacking", flush=True)
     # stack along first axis
     final = np.vstack((final, output))
     
-    print("\t - printing", flush=True)
+    #print("\t - printing", flush=True)
     #print(final.shape)
     elements_to_print = (final[:,0] == iFrame)
     #print("1",elements_to_print.shape)
