@@ -36,14 +36,17 @@ for iFrame, frame in enumerate(data):
         output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[0,2,3,1,4]]
         final = np.copy(output)
 
+    print("\t - set up", flush=True)
     unelapsed_ts = tRange[iFrame:]
     zpts = np.sqrt(unelapsed_ts**2 - tau**2)
     zpts = np.concatenate((-zpts[-1:0:-1],zpts))
     tpts = np.concatenate((unelapsed_ts[-1:0:-1],unelapsed_ts))
     Nz = len(zpts)
     
+    print("\t - tiling", flush=True)
     output = np.tile(frame,(Nz,1,1))
 
+    print("\t - filling", flush=True)
     # set 0th column to t coordinate, 1st column to z coordinate
     #for iz, zSlice in enumerate(output):
     #    zSlice[:,0] = np.full_like( zSlice[:,0], tpts[iz] )
@@ -52,7 +55,10 @@ for iFrame, frame in enumerate(data):
     output[:,:,1] = zpts[:,np.newaxis]
     
     # re-shape to (Nx,Ny,Nz,5) and set column order to t, x, y, z, e
+    print("\t - reshaping", flush=True)
     output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[0,2,3,1,4]]
+
+    print("\t - stacking", flush=True)
     final = np.dstack((final, output))
         
 # reshape and sort
