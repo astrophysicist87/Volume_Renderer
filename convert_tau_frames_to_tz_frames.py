@@ -28,6 +28,8 @@ print('data.shape =', data.shape)
 data = np.concatenate( (np.zeros_like(data[:,:,0])[:,:,np.newaxis], data), axis=2 )
 print('data.shape =', data.shape)
 
+print(data[0,:10])
+
 exit(1)
 
 # doesn't matter what this is, just declare it
