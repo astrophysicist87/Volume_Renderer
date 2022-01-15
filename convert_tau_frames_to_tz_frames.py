@@ -63,8 +63,8 @@ for iFrame, frame in enumerate(data):
     zpts = np.sqrt(unelapsed_ts**2 - tau**2)
     zpts = np.concatenate((-zpts[-1:0:-1],zpts))
     tpts = np.concatenate((unelapsed_ts[-1:0:-1],unelapsed_ts))
-    print('tpts =',tpts)
-    print('zpts =',zpts)
+    #print('tpts =',tpts)
+    #print('zpts =',zpts)
     Nz = len(zpts)
     
     print("\t - tiling", flush=True)
@@ -86,7 +86,7 @@ for iFrame, frame in enumerate(data):
     final = np.dstack((final, output))
     
     print("\t - printing", flush=True)
-    print(final.shape)
+    #print(final.shape)
     elements_to_print = np.isclose(final[:,:,:,0],t)
     #print("1",elements_to_print.shape)
     #print("2a",final[elements_to_print].shape)
