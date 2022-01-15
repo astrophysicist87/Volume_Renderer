@@ -74,8 +74,9 @@ for iFrame, frame in enumerate(data):
     #output_to_text(iFrame, final[np.where(np.isclose(final[:,:,:,0],t))])
     elements_to_print = np.isclose(final[:,:,:,0],t)
     print("1",elements_to_print.shape)
+    print("2a",final[elements_to_print].shape)
     output_to_text(iFrame, final[elements_to_print])
-    print("2",final[np.where(elements_to_print)].shape)
+    print("2b",final[elements_to_print].shape)
     final = final[np.logical_not(elements_to_print)]
     print("3",final[np.logical_not(elements_to_print)].shape)
     print(final.shape)
