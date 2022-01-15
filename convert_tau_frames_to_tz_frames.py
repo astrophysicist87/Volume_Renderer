@@ -79,8 +79,15 @@ final = final.reshape([final.size//5,5])
 #final = final[final[:, 0].argsort()]
 final = final[np.lexsort((final[:,3], final[:,2], final[:,1], final[:,0]))]
 
-np.savetxt('see_if_it_works.dat', final, fmt="%lf")
+#final = np.split(final,np.where(np.diff(final[:,0])!=0)[0].tolist())
+final = np.split(final, (np.where(np.diff(final[:,0])>1e-6)[0]+1).tolist())
 
+print('Obtained', len(final), 'different timesteps')
+
+for iTimeslice, timeslice in enumerate(final):
+    print(iTimeslice, timeslice.shape)
+    np.savetxt('all_frames/post_collision_frames_vs_t/frame_' \
+               + str(iTimeslice) + '.dat', timeslice, fmt="%lf")
 
 
 
