@@ -20,7 +20,7 @@ def output_to_text(iFrame, data_in, alldata):
     print("bigdata.shape=",bigdata.shape)
     print(alldata.shape)
     for iTauslice, tauslice in enumerate(bigdata):
-        tauslice[:,4:] = alldata[int(data[iTauslice,3],),1:]
+        tauslice[:,4:] = alldata[int(data[iTauslice,3],),:,1:]
     #exit(1)
     
     
