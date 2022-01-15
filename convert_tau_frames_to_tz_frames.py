@@ -21,6 +21,10 @@ dt = dtau
 tauRange = data[:,0,0]
 tRange = np.copy(tauRange)
 
+print('tRange=',tRange)
+if True:
+    exit
+
 # add an extra column to data for t coordinates
 print('data.shape =', data.shape)
 data = np.concatenate( (np.zeros_like(data[:,:,0])[:,:,np.newaxis], data), axis=2 )
