@@ -65,13 +65,13 @@ final = np.split(final, (np.where(np.diff(final[:,0])>1e-6)[0]+1).tolist())
 print('Saving results', flush=True)
 
 
+#for iTimeslice, timeslice in enumerate(final):
+#    print(iTimeslice, timeslice.shape)
+#    np.savetxt('all_frames/post_collision_frames_vs_t/frame_' \
+#               + str(iTimeslice) + '.dat', timeslice, fmt="%lf")
+
+
 for iTimeslice, timeslice in enumerate(final):
-    print(iTimeslice, timeslice.shape)
-    np.savetxt('all_frames/post_collision_frames_vs_t/frame_' \
-               + str(iTimeslice) + '.dat', timeslice, fmt="%lf")
-
-
-'''for iTimeslice, timeslice in enumerate(final):
     outfilename = 'all_frames/post_collision_frames_vs_t/frame_' \
                   + str(iTimeslice).zfill(4) + '.h5'
     hf = h5.File(outfilename, 'w')
@@ -83,6 +83,6 @@ for iTimeslice, timeslice in enumerate(final):
     hf.create_dataset('y', data = output[0,:,0,2])
     hf.create_dataset('z', data = output[0,0,:,3])
     hf.create_dataset('energy_density', data = output[:,:,:,4])
-    hf.close()'''
+    hf.close()
     
 print('Done!')
