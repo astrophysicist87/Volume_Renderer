@@ -77,7 +77,7 @@ for iFrame, frame in enumerate(data):
     print("2a",final[elements_to_print].shape)
     output_to_text(iFrame, final[elements_to_print])
     print("2b",final[elements_to_print].shape)
-    final = final[np.logical_not(elements_to_print)]
+    final = final[np.logical_not(elements_to_print)].reshape([Nx,Ny,final.size//(Nx*Ny*5),5])
     print("3",final[np.logical_not(elements_to_print)].shape)
     print(final.shape)
         
