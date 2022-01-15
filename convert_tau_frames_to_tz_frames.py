@@ -61,7 +61,7 @@ for iFrame, frame in enumerate(data):
 
         # set 0th column to t coordinate, 1st column to z coordinate
         for iz, zSlice in enumerate(output):
-            print('zSlice.shape = ', zSlice.shape)
+            print('zSlice.shape = ', zSlice.shape,'; tpts[iz] =', tpts[iz], zpts[iz])
             zSlice[:,0] = np.full_like( zSlice[:,0], tpts[iz] )
             zSlice[:,1] = np.full_like( zSlice[:,1], zpts[iz] )
         
