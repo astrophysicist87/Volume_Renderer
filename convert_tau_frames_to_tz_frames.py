@@ -2,16 +2,34 @@ import h5py as h5
 import numpy as np
 import sys
 
-def output_to_text(iFrame, data):
-    #data = data.reshape([data.size//5,5])
+print("Loading data", flush=True)
+
+dxy = float(sys.argv[1])
+Nx = int(sys.argv[2])
+Ny = int(sys.argv[3])
+
+
+def output_to_text(iFrame, data_in, alldata):
+    print("Output to text")
+    data = data_in.reshape([data_in.size//4,4])
+    print(data.shape)
+    data = np.c_[ data, np.zeros((len(data),3)) ]
+    print(data.shape)
+    bigdata = np.swapaxes(np.tile(data,(Nx*Ny,1,1)), 0, 2)
+    print(bigdata.shape)
+    exit(1)
+    
+    
+    
+    
     data = data[np.lexsort((data[:,3], data[:,2], data[:,1], data[:,0]))]
     np.savetxt('all_frames/post_collision_frames_vs_t/frame_' \
                + str(iFrame) + '.dat', data, fmt="%lf")
     
 def output_to_hdf5(iFrame, data):
     print("\t\t (A)",flush=True)
-    #print(data.shape,flush=True)
-    #data = data.reshape([data.size//5,5])
+    print(data.shape,flush=True)
+    data = data.reshape([data.size//5,5])
     print(data.shape,flush=True)
     data = data[np.lexsort((data[:,3], data[:,2], data[:,1], data[:,0]))]
     outfilename = 'all_frames/post_collision_frames_vs_t/frame_' \
@@ -29,11 +47,8 @@ def output_to_hdf5(iFrame, data):
     hf.close()
     print("\t\t (Ca)",flush=True)
 
-print("Loading data", flush=True)
 
-dxy = float(sys.argv[1])
-Nx = int(sys.argv[2])
-Ny = int(sys.argv[3])
+
 data = np.array([np.loadtxt(frame) for frame in sys.argv[4:]]) # tau, x, y, e
 
 dt = dtau = 0.03585
@@ -53,56 +68,51 @@ for iFrame, frame in enumerate(data):
         # add 2 extra z slices for initial timestep
         Nz = 2
         zpts = np.linspace(-0.5*dt,0.5*dt,num=Nz)
-        output = np.tile(frame,(Nz,1,1))
+        #output = np.tile(frame,(Nz,1,1))
+        output = np.full(float(iFrame), (Nz,4))
 
         for iz, zSlice in enumerate(output):
-            zSlice[:,0] = np.full_like( zSlice[:,0], t )
-            zSlice[:,1] = np.full_like( zSlice[:,1], zpts[iz] )
+            zSlice[:,0] = np.full_like( zSlice[:,0], 0 )
+            zSlice[:,1] = np.full_like( zSlice[:,1], t )
+            zSlice[:,2] = np.full_like( zSlice[:,2], zpts[iz] )
         
         # re-shape to (Nx,Ny,Nz,5) and set column order to t, x, y, z, e
         #output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[0,2,3,1,4]]
-        #final = np.copy(output[:,:,[0,2,3,1,4]])
-        final = np.copy((output.reshape((Nx*Ny*Nz,5)))[:,[0,2,3,1,4]])
+        final = np.copy(output)
 
     print("\t - set up", flush=True)
     unelapsed_ts = tRange[iFrame:]
+    unelapsed_tinds = np.arange(len(tRange))[iFrame:]
     zpts = np.sqrt(unelapsed_ts**2 - tau**2)
     zpts = np.concatenate((-zpts[-1:0:-1],zpts))
     tpts = np.concatenate((unelapsed_ts[-1:0:-1],unelapsed_ts))
+    tinds = np.concatenate((unelapsed_tinds[-1:0:-1],unelapsed_tinds))
     #print('tpts =',tpts)
     #print('zpts =',zpts)
     Nz = len(zpts)
     
     print("\t - tiling", flush=True)
-    output = np.tile(frame,(Nz,1,1))
+    #output = np.tile(frame,(Nz,1,1))
+    output = np.full(float(iFrame), (Nz,4))
 
     print("\t - filling", flush=True)
     # set 0th column to t coordinate, 1st column to z coordinate
-    #for iz, zSlice in enumerate(output):
-    #    zSlice[:,0] = np.full_like( zSlice[:,0], tpts[iz] )
-    #    zSlice[:,1] = np.full_like( zSlice[:,1], zpts[iz] )
-    output[:,:,0] = tpts[:,np.newaxis]
-    output[:,:,1] = zpts[:,np.newaxis]
+    print(output.shape, tpts.shape, zpts.shape)
+    output[:,0] = tinds
+    output[:,1] = tpts
+    output[:,2] = zpts
     
-    # re-shape to (Nx,Ny,Nz,5) and set column order to t, x, y, z, e
-    #print("\t - reshaping", flush=True)
-    #output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[0,2,3,1,4]]
-    #output = output[:,:,[0,2,3,1,4]] # just re-arrange columns since sort is done later
-
     print("\t - stacking", flush=True)
-    #final = np.dstack((final, output))
     # stack along first axis
-    #final = np.vstack((final, output[:,:,[0,2,3,1,4]])) # just re-arrange columns since sort is done later
-    final = np.vstack((final, (output.reshape((Nx*Ny*Nz,5)))[:,[0,2,3,1,4]])) # just re-arrange columns since sort is done later
+    final = np.vstack((final, output))
     
     print("\t - printing", flush=True)
     print(final.shape)
-    #elements_to_print = np.isclose(final[:,:,0],t)
-    elements_to_print = np.isclose(final[:,0],t)
+    elements_to_print = (final[:,0] == iFrame)
     #print("1",elements_to_print.shape)
     #print("2a",final[elements_to_print].shape)
-    #output_to_text(iFrame, final[elements_to_print])
-    output_to_hdf5(iFrame, final[elements_to_print])
+    output_to_text(iFrame, final[elements_to_print], data)
+    #output_to_hdf5(iFrame, final[elements_to_print])
     #print("2b",final[elements_to_print].shape)
     print("\t\t (Cb)",flush=True)
     final = final[np.logical_not(elements_to_print)]
