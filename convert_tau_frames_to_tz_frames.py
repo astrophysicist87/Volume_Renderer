@@ -10,36 +10,33 @@ Ny = int(sys.argv[3])
 
 
 def output_to_text(iFrame, data_in, alldata):
-    print("Output to text")
+    #print("Output to text")
     data = data_in.reshape([data_in.size//4,4])
-    print(data.shape)
+    #print(data.shape)
     data = np.c_[ data, np.zeros((len(data),3)) ]
-    print(data.shape)
-    print(data)
+    #print(data.shape)
+    #print(data)
     bigdata = np.swapaxes(np.tile(data,(Nx*Ny,1,1)), 0, 1)
-    print("bigdata.shape=",bigdata.shape)
-    print(alldata.shape)
+    #print("bigdata.shape=",bigdata.shape)
+    #print(alldata.shape)
     for iTauslice, tauslice in enumerate(bigdata):
-        print("slice",iTauslice,":",tauslice[:,4:].shape,alldata[int(data[iTauslice,3],),:,1:].shape)
-        tauslice[:,4:] = alldata[int(data[iTauslice,3],),:,1:]
-        
-        
-    print("bigdata.shape=",bigdata.shape)
+        #print("slice",iTauslice,":",tauslice[:,4:].shape,alldata[int(data[iTauslice,3],),:,1:].shape)
+        tauslice[:,4:] = alldata[int(data[iTauslice,3],),:,1:]        
+    #print("bigdata.shape=",bigdata.shape)
     bigdata = (bigdata.reshape([bigdata.size//7,7]))[:,[1,4,5,2,6]]
-    print("final bigdata.shape=",bigdata.shape)
+    #print("final bigdata.shape=",bigdata.shape)
     bigdata = bigdata[np.lexsort((bigdata[:,3], bigdata[:,2], bigdata[:,1], bigdata[:,0]))]
     np.savetxt('all_frames/post_collision_frames_vs_t/frame_' \
                + str(iFrame) + '.dat', bigdata, fmt="%lf")
     
 def output_to_hdf5(iFrame, data):
-    print("\t\t (A)",flush=True)
-    print(data.shape,flush=True)
+    
+    
+    
     data = data.reshape([data.size//5,5])
-    print(data.shape,flush=True)
     data = data[np.lexsort((data[:,3], data[:,2], data[:,1], data[:,0]))]
     outfilename = 'all_frames/post_collision_frames_vs_t/frame_' \
                   + str(iFrame).zfill(4) + '.h5'
-    print("\t\t (B)",flush=True)
     hf = h5.File(outfilename, 'w')
     datasize = len(data)
     Nz = datasize//(Nx*Ny)
@@ -50,7 +47,6 @@ def output_to_hdf5(iFrame, data):
     hf.create_dataset('z', data = output[0,0,:,3])
     hf.create_dataset('energy_density', data = output[:,:,:,4])
     hf.close()
-    print("\t\t (Ca)",flush=True)
 
 
 
@@ -125,11 +121,8 @@ for iFrame, frame in enumerate(data):
     output_to_text(iFrame, final[elements_to_print], data)
     #output_to_hdf5(iFrame, final[elements_to_print])
     #print("2b",final[elements_to_print].shape)
-    print("\t\t (Cb)",flush=True)
     final = final[np.logical_not(elements_to_print)]
-    print("\t\t (D)",flush=True)
     #final = final.reshape([final.size//(Nx*Ny*5),Nx*Ny,5])
-    print("\t\t (E)",flush=True)
     #print("3",final.shape)
     print(final.shape)
         
