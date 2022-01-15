@@ -69,7 +69,7 @@ for iFrame, frame in enumerate(data):
         Nz = 2
         zpts = np.linspace(-0.5*dt,0.5*dt,num=Nz)
         #output = np.tile(frame,(Nz,1,1))
-        output = np.full(float(iFrame), (Nz,4))
+        output = np.full((Nz,4), float(iFrame))
 
         for iz, zSlice in enumerate(output):
             zSlice[:,0] = np.full_like( zSlice[:,0], 0 )
@@ -93,7 +93,7 @@ for iFrame, frame in enumerate(data):
     
     print("\t - tiling", flush=True)
     #output = np.tile(frame,(Nz,1,1))
-    output = np.full(float(iFrame), (Nz,4))
+    output = np.full((Nz,4), float(iFrame))
 
     print("\t - filling", flush=True)
     # set 0th column to t coordinate, 1st column to z coordinate
