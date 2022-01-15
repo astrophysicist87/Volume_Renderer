@@ -23,7 +23,7 @@ tRange = np.copy(tauRange)
 
 print('tRange=',tRange)
 if True:
-    exit
+    exit(1)
 
 # add an extra column to data for t coordinates
 print('data.shape =', data.shape)
