@@ -71,10 +71,13 @@ for iFrame, frame in enumerate(data):
         #output = np.tile(frame,(Nz,1,1))
         output = np.full((Nz,4), float(iFrame))
 
-        for iz, zSlice in enumerate(output):
-            zSlice[:,0] = np.full_like( zSlice[:,0], 0 )
-            zSlice[:,1] = np.full_like( zSlice[:,1], t )
-            zSlice[:,2] = np.full_like( zSlice[:,2], zpts[iz] )
+        output[:,0] = 0
+        output[:,1] = t
+        output[:,2] = zpts
+        #for iz, zSlice in enumerate(output):
+        #    zSlice[:,0] = np.full_like( zSlice[:,0], 0 )
+        #    zSlice[:,1] = np.full_like( zSlice[:,1], t )
+        #    zSlice[:,2] = np.full_like( zSlice[:,2], zpts[iz] )
         
         # re-shape to (Nx,Ny,Nz,5) and set column order to t, x, y, z, e
         #output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[0,2,3,1,4]]
