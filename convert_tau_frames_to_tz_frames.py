@@ -17,8 +17,6 @@ def output_to_text(iFrame, data_in, alldata):
     print(data.shape)
     bigdata = np.swapaxes(np.tile(data,(Nx*Ny,1,1)), 0, 2)
     print(bigdata.shape)
-    for cell in bigdata[:,:].ravel():
-        print(cell.shape)
     exit(1)
     
     
