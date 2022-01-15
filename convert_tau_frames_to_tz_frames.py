@@ -35,9 +35,9 @@ final = None
 
 for iFrame, frame in enumerate(data):
     t = tau = frame[0,1]
-    if iFrame == -1:
-        # make all three z slices the same
-        Nz = 3
+    if iFrame == 0:
+        # add 2 extra z slices for initial timestep
+        Nz = 2
         zpts = np.linspace(-0.5*dt,0.5*dt,num=Nz)
         output = np.tile(frame,(Nz,1,1))
 
@@ -48,34 +48,31 @@ for iFrame, frame in enumerate(data):
         # re-shape to (Nx,Ny,Nz,5) and set column order to t, x, y, z, e
         output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[0,2,3,1,4]]
         final = np.copy(output)
-    else:
-        unelapsed_ts = tRange[iFrame:]
-        print('unelapsed_ts=',unelapsed_ts)
-        zpts = np.sqrt(unelapsed_ts**2 - tau**2)
-        zpts = np.concatenate((-zpts[-1:0:-1],zpts))
-        tpts = np.concatenate((unelapsed_ts[-1:0:-1],unelapsed_ts))
-        print('tpts=',tpts)
-        print('zpts=',zpts)
-        Nz = len(zpts)
-        
-        output = np.tile(frame,(Nz,1,1))
 
-        # set 0th column to t coordinate, 1st column to z coordinate
-        for iz, zSlice in enumerate(output):
-            print('zSlice.shape = ', zSlice.shape,'; tpts[iz] =', tpts[iz], zpts[iz])
-            zSlice[:,0] = np.full_like( zSlice[:,0], tpts[iz] )
-            zSlice[:,1] = np.full_like( zSlice[:,1], zpts[iz] )
-        
-        print('output.shape = ', output.shape)
+    unelapsed_ts = tRange[iFrame:]
+    print('unelapsed_ts=',unelapsed_ts)
+    zpts = np.sqrt(unelapsed_ts**2 - tau**2)
+    zpts = np.concatenate((-zpts[-1:0:-1],zpts))
+    tpts = np.concatenate((unelapsed_ts[-1:0:-1],unelapsed_ts))
+    print('tpts=',tpts)
+    print('zpts=',zpts)
+    Nz = len(zpts)
+    
+    output = np.tile(frame,(Nz,1,1))
 
-        # re-shape to (Nx,Ny,Nz,5) and set column order to t, x, y, z, e
-        output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[0,2,3,1,4]]
-        #print(final.shape, output.shape)
-        if iFrame == 0:
-            final = np.copy(output)
-        else:
-            final = np.dstack((final, output))
-        print(final.shape)
+    # set 0th column to t coordinate, 1st column to z coordinate
+    for iz, zSlice in enumerate(output):
+        print('zSlice.shape = ', zSlice.shape,'; tpts[iz] =', tpts[iz], zpts[iz])
+        zSlice[:,0] = np.full_like( zSlice[:,0], tpts[iz] )
+        zSlice[:,1] = np.full_like( zSlice[:,1], zpts[iz] )
+    
+    print('output.shape = ', output.shape)
+
+    # re-shape to (Nx,Ny,Nz,5) and set column order to t, x, y, z, e
+    output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[0,2,3,1,4]]
+    print(final.shape, output.shape)
+    final = np.dstack((final, output))
+    print(final.shape)
         
 # reshape and sort
 final = final.reshape([final.size//5,5])
