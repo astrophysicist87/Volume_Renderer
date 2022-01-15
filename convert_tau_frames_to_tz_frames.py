@@ -35,7 +35,7 @@ final = None
 
 for iFrame, frame in enumerate(data):
     t = tau = frame[0,1]
-    if iFrame == 0:
+    if iFrame == -1:
         # make all three z slices the same
         Nz = 3
         zpts = np.linspace(-0.5*dt,0.5*dt,num=Nz)
