@@ -96,8 +96,8 @@ for iFrame, frame in enumerate(data):
     elements_to_print = np.isclose(final[:,:,0],t)
     #print("1",elements_to_print.shape)
     #print("2a",final[elements_to_print].shape)
-    output_to_text(iFrame, final[elements_to_print])
-    #output_to_hdf5(iFrame, final[elements_to_print])
+    #output_to_text(iFrame, final[elements_to_print])
+    output_to_hdf5(iFrame, final[elements_to_print])
     #print("2b",final[elements_to_print].shape)
     print("\t\t (Cb)",flush=True)
     final = final[np.logical_not(elements_to_print)]
