@@ -25,7 +25,7 @@ def output_to_hdf5(iFrame, data):
     hf.create_dataset('z', data = output[0,0,:,3])
     hf.create_dataset('energy_density', data = output[:,:,:,4])
     hf.close()
-    print("\t\t (C)",flush=True)
+    print("\t\t (Ca)",flush=True)
 
 print("Loading data", flush=True)
 
@@ -96,8 +96,11 @@ for iFrame, frame in enumerate(data):
     #output_to_text(iFrame, final[elements_to_print])
     output_to_hdf5(iFrame, final[elements_to_print])
     #print("2b",final[elements_to_print].shape)
+    print("\t\t (Cb)",flush=True)
     final = final[np.logical_not(elements_to_print)]
+    print("\t\t (D)",flush=True)
     final = final.reshape([Nx,Ny,final.size//(Nx*Ny*5),5])
+    print("\t\t (E)",flush=True)
     #print("3",final.shape)
     #print(final.shape)
         
