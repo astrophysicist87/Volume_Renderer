@@ -30,7 +30,7 @@ print('data.shape =', data.shape)
 
 print(data[0,:10])
 
-exit(1)
+#exit(1)
 
 # doesn't matter what this is, just declare it
 final = None
@@ -52,18 +52,18 @@ for iFrame, frame in enumerate(data):
         final = np.copy(output)
     else:
         unelapsed_ts = tRange[iFrame:]
-        print(unelapsed_ts)
+        print('unelapsed_ts=',unelapsed_ts)
         zpts = np.sqrt(unelapsed_ts**2 - tau**2)
         zpts = np.concatenate((-zpts[-1:0:-1],zpts))
         tpts = np.concatenate((unelapsed_ts[-1:0:-1],unelapsed_ts))
+        print('tpts=',tpts)
         Nz = len(zpts)
         
         output = np.tile(frame,(Nz,1,1))
 
-        print('output.shape = ', output.shape)
-
         # set 0th column to t coordinate, 1st column to z coordinate
         for iz, zSlice in enumerate(output):
+            print('zSlice.shape = ', zSlice.shape)
             zSlice[:,0] = np.full_like( zSlice[:,0], tpts[iz] )
             zSlice[:,1] = np.full_like( zSlice[:,1], zpts[iz] )
         
