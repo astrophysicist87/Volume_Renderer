@@ -41,6 +41,8 @@ for iFrame, frame in enumerate(data):
     zpts = np.sqrt(unelapsed_ts**2 - tau**2)
     zpts = np.concatenate((-zpts[-1:0:-1],zpts))
     tpts = np.concatenate((unelapsed_ts[-1:0:-1],unelapsed_ts))
+    print('tpts =',tpts)
+    print('zpts =',zpts)
     Nz = len(zpts)
     
     print("\t - tiling", flush=True)
