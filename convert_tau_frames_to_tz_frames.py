@@ -35,7 +35,7 @@ final = None
 
 for iFrame, frame in enumerate(data):
     t = tau = frame[0,1]
-    print('Processing timestep =', tau, flush=True)
+    print('Processing tau =', tau, flush=True)
     if iFrame == 0:
         # add 2 extra z slices for initial timestep
         Nz = 2
