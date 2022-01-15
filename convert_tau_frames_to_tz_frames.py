@@ -16,7 +16,7 @@ def output_to_text(iFrame, data_in, alldata):
     data = np.c_[ data, np.zeros((len(data),3)) ]
     print(data.shape)
     print(data)
-    bigdata = np.transpose(np.tile(data,(Nx*Ny,1,1)), (1,2,0))
+    bigdata = np.swapaxes(np.tile(data,(Nx*Ny,1,1)), 0, 1)
     print("bigdata.shape=",bigdata.shape)
     print(alldata.shape)
     #for tauslice in bigdata:
@@ -60,7 +60,7 @@ tauRange = data[:,0,0]
 tRange = np.copy(tauRange)
 
 # add an extra column to data for t coordinates
-data = np.concatenate( (np.zeros_like(data[:,:,0])[:,:,np.newaxis], data), axis=2 )
+#data = np.concatenate( (np.zeros_like(data[:,:,0])[:,:,np.newaxis], data), axis=2 )
 
 # doesn't matter what this is, just declare it
 final = None
