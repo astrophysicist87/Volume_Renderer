@@ -84,17 +84,22 @@ final = np.split(final, (np.where(np.diff(final[:,0])>1e-6)[0]+1).tolist())
 
 print('Obtained', len(final), 'different timesteps')
 
+#for iTimeslice, timeslice in enumerate(final):
+#    print(iTimeslice, timeslice.shape)
+#    np.savetxt('all_frames/post_collision_frames_vs_t/frame_' \
+#               + str(iTimeslice) + '.dat', timeslice, fmt="%lf")
+
+
 for iTimeslice, timeslice in enumerate(final):
-    print(iTimeslice, timeslice.shape)
-    np.savetxt('all_frames/post_collision_frames_vs_t/frame_' \
-               + str(iTimeslice) + '.dat', timeslice, fmt="%lf")
-
-
-
-#outfilename = (sys.argv[1].replace('timestep', 'frame')).replace('.dat','.h5')
-#hf = h5.File(outfilename, 'w')
-#hf.create_dataset('x', data = output[:,0,0,0])
-#hf.create_dataset('y', data = output[0,:,0,1])
-#hf.create_dataset('z', data = output[0,0,:,2])
-#hf.create_dataset('energy_density', data = output[:,:,:,3])
-#hf.close()
+    outfilename = 'all_frames/post_collision_frames_vs_t/frame_' \
+                  + str(iTimeslice).zfill(4) + '.h5'
+    hf = h5.File(outfilename, 'w')
+    timeslicesize = len(timeslice)
+    Nz = timeslicesize//(Nx*Ny)
+    output = timeslice.reshape(Nx,Ny,Nz,5)
+    hf.create_dataset('t', data = timeslice[0,0])
+    hf.create_dataset('x', data = output[:,0,0,1])
+    hf.create_dataset('y', data = output[0,:,0,2])
+    hf.create_dataset('z', data = output[0,0,:,3])
+    hf.create_dataset('energy_density', data = output[:,:,:,4])
+    hf.close()
