@@ -53,6 +53,8 @@ for iFrame, frame in enumerate(data):
         
         output = np.tile(frame,(Nz,1,1))
 
+        print('output.shape = ', output.shape)
+
         # set 0th column to t coordinate
         for iz, zSlice in enumerate(output):
             zSlice[:,0] = np.full_like( zSlice[:,0], tpts[iz] )
