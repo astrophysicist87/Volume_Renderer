@@ -26,9 +26,10 @@ def output_to_text(iFrame, data_in, alldata):
         
     print("bigdata.shape=",bigdata.shape)
     bigdata = (bigdata.reshape([bigdata.size//7,7]))[:,[1,4,5,2,6]]
+    print("final bigdata.shape=",bigdata.shape)
     bigdata = bigdata[np.lexsort((bigdata[:,3], bigdata[:,2], bigdata[:,1], bigdata[:,0]))]
     np.savetxt('all_frames/post_collision_frames_vs_t/frame_' \
-               + str(iFrame) + '.dat', data, fmt="%lf")
+               + str(iFrame) + '.dat', bigdata, fmt="%lf")
     
 def output_to_hdf5(iFrame, data):
     print("\t\t (A)",flush=True)
