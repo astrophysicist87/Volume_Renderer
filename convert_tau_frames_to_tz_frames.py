@@ -90,6 +90,9 @@ for iFrame, frame in enumerate(data):
     print("\t - set up", flush=True)
     unelapsed_ts = tRange[iFrame:]
     unelapsed_tinds = np.arange(len(tRange))[iFrame:]
+    print(unelapsed_ts)
+    print(unelapsed_tinds)
+    print(tau)
     zpts = np.sqrt(unelapsed_ts**2 - tau**2)
     zpts = np.concatenate((-zpts[-1:0:-1],zpts))
     tpts = np.concatenate((unelapsed_ts[-1:0:-1],unelapsed_ts))
