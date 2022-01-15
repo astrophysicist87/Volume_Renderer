@@ -76,7 +76,7 @@ for iFrame, frame in enumerate(data):
         
 # reshape and sort
 final = final.reshape([final.size//5,5])
-#final = final[final[:, 0].argsort()]
+final = final[final[:, 0].argsort()]
 
 np.savetxt('see_if_it_works.dat', final, fmt="%lf")
 
