@@ -2,6 +2,8 @@ import h5py as h5
 import numpy as np
 import sys
 
+print("Loading data", flush=True)
+
 dxy = float(sys.argv[1])
 Nx = int(sys.argv[2])
 Ny = int(sys.argv[3])
