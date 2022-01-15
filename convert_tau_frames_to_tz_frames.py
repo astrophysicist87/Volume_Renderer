@@ -21,12 +21,12 @@ dt = dtau
 tauRange = data[:,0,0]
 tRange = np.copy(tauRange)
 
-print('tRange=',tRange)
+#print('tRange=',tRange)
 
 # add an extra column to data for t coordinates
-print('data.shape =', data.shape)
+#print('data.shape =', data.shape)
 data = np.concatenate( (np.zeros_like(data[:,:,0])[:,:,np.newaxis], data), axis=2 )
-print('data.shape =', data.shape)
+#print('data.shape =', data.shape)
 
 #exit(1)
 
@@ -35,6 +35,7 @@ final = None
 
 for iFrame, frame in enumerate(data):
     t = tau = frame[0,1]
+    print('Processing timestep =', tau, flush=True)
     if iFrame == 0:
         # add 2 extra z slices for initial timestep
         Nz = 2
@@ -50,31 +51,32 @@ for iFrame, frame in enumerate(data):
         final = np.copy(output)
 
     unelapsed_ts = tRange[iFrame:]
-    print('unelapsed_ts=',unelapsed_ts)
+    #print('unelapsed_ts=',unelapsed_ts)
     zpts = np.sqrt(unelapsed_ts**2 - tau**2)
     zpts = np.concatenate((-zpts[-1:0:-1],zpts))
     tpts = np.concatenate((unelapsed_ts[-1:0:-1],unelapsed_ts))
-    print('tpts=',tpts)
-    print('zpts=',zpts)
+    #print('tpts=',tpts)
+    #print('zpts=',zpts)
     Nz = len(zpts)
     
     output = np.tile(frame,(Nz,1,1))
 
     # set 0th column to t coordinate, 1st column to z coordinate
     for iz, zSlice in enumerate(output):
-        print('zSlice.shape = ', zSlice.shape,'; tpts[iz] =', tpts[iz], zpts[iz])
+        #print('zSlice.shape = ', zSlice.shape,'; tpts[iz] =', tpts[iz], zpts[iz])
         zSlice[:,0] = np.full_like( zSlice[:,0], tpts[iz] )
         zSlice[:,1] = np.full_like( zSlice[:,1], zpts[iz] )
     
-    print('output.shape = ', output.shape)
+    #print('output.shape = ', output.shape)
 
     # re-shape to (Nx,Ny,Nz,5) and set column order to t, x, y, z, e
     output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[0,2,3,1,4]]
-    print(final.shape, output.shape)
+    #print(final.shape, output.shape)
     final = np.dstack((final, output))
-    print(final.shape)
+    #print(final.shape)
         
 # reshape and sort
+print('Reshape, sort, and split final array', flush=True)
 final = final.reshape([final.size//5,5])
 #final = final[final[:, 0].argsort()]
 final = final[np.lexsort((final[:,3], final[:,2], final[:,1], final[:,0]))]
@@ -82,7 +84,7 @@ final = final[np.lexsort((final[:,3], final[:,2], final[:,1], final[:,0]))]
 #final = np.split(final,np.where(np.diff(final[:,0])!=0)[0].tolist())
 final = np.split(final, (np.where(np.diff(final[:,0])>1e-6)[0]+1).tolist())
 
-print('Obtained', len(final), 'different timesteps')
+#print('Obtained', len(final), 'different timesteps')
 
 #for iTimeslice, timeslice in enumerate(final):
 #    print(iTimeslice, timeslice.shape)
@@ -90,6 +92,7 @@ print('Obtained', len(final), 'different timesteps')
 #               + str(iTimeslice) + '.dat', timeslice, fmt="%lf")
 
 
+print('Saving results', flush=True)
 for iTimeslice, timeslice in enumerate(final):
     outfilename = 'all_frames/post_collision_frames_vs_t/frame_' \
                   + str(iTimeslice).zfill(4) + '.h5'
@@ -103,3 +106,5 @@ for iTimeslice, timeslice in enumerate(final):
     hf.create_dataset('z', data = output[0,0,:,3])
     hf.create_dataset('energy_density', data = output[:,:,:,4])
     hf.close()
+    
+print('Done!')
