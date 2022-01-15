@@ -45,17 +45,17 @@ for iFrame, frame in enumerate(data):
         output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[0,2,3,1,4]]
         final = np.copy(output)
     else:
-        unelapsed_taus = tauRange[iFrame:]
-        zpts = np.sqrt(unelapsed_taus**2 - t**2)
+        unelapsed_ts = tRange[iFrame:]
+        zpts = np.sqrt(unelapsed_ts**2 - tau**2)
         zpts = np.concatenate((-zpts[-1:0:-1],zpts))
-        tpts = np.concatenate((unelapsed_taus[-1:0:-1],unelapsed_taus))
+        tpts = np.concatenate((unelapsed_ts[-1:0:-1],unelapsed_ts))
         Nz = len(zpts)
         
         output = np.tile(frame,(Nz,1,1))
 
         print('output.shape = ', output.shape)
 
-        # set 0th column to t coordinate
+        # set 0th column to t coordinate, 1st column to z coordinate
         for iz, zSlice in enumerate(output):
             zSlice[:,0] = np.full_like( zSlice[:,0], tpts[iz] )
             zSlice[:,1] = np.full_like( zSlice[:,1], zpts[iz] )
@@ -68,7 +68,7 @@ for iFrame, frame in enumerate(data):
         
 # reshape and sort
 final = final.reshape([final.size//5,5])
-final = final[final[:, 0].argsort()]
+#final = final[final[:, 0].argsort()]
 
 np.savetxt('see_if_it_works.dat', final, fmt="%lf")
 
