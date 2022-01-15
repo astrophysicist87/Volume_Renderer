@@ -21,12 +21,9 @@ def output_to_text(iFrame, data_in, alldata):
     print(alldata.shape)
     for iTauslice, tauslice in enumerate(bigdata):
         tauslice[:,4:] = alldata[int(data[iTauslice,3],),:,1:]
-    #exit(1)
-    
-    
-    
-    
-    data = data[np.lexsort((data[:,3], data[:,2], data[:,1], data[:,0]))]
+        
+    bigdata = (bigdata.reshape([bigdata.size//7,7]))[:,[1,4,5,2,6]]
+    bigdata = bigdata[np.lexsort((bigdata[:,3], bigdata[:,2], bigdata[:,1], bigdata[:,0]))]
     np.savetxt('all_frames/post_collision_frames_vs_t/frame_' \
                + str(iFrame) + '.dat', data, fmt="%lf")
     
