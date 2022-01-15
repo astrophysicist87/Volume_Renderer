@@ -34,7 +34,7 @@ print('data.shape =', data.shape)
 final = None
 
 for iFrame, frame in enumerate(data):
-    t = tau = frame[0,0]
+    t = tau = frame[0,1]
     if iFrame == 0:
         # make all three z slices the same
         Nz = 3
