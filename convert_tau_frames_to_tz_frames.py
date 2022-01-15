@@ -9,10 +9,12 @@ def output_to_text(iFrame, data):
                + str(iFrame) + '.dat', data, fmt="%lf")
     
 def output_to_hdf5(iFrame, data):
+    print("\t\t (A)",flush=True)
     data = data.reshape([data.size//5,5])
     data = data[np.lexsort((data[:,3], data[:,2], data[:,1], data[:,0]))]
     outfilename = 'all_frames/post_collision_frames_vs_t/frame_' \
                   + str(iFrame).zfill(4) + '.h5'
+    print("\t\t (B)",flush=True)
     hf = h5.File(outfilename, 'w')
     datasize = len(data)
     Nz = datasize//(Nx*Ny)
@@ -23,6 +25,7 @@ def output_to_hdf5(iFrame, data):
     hf.create_dataset('z', data = output[0,0,:,3])
     hf.create_dataset('energy_density', data = output[:,:,:,4])
     hf.close()
+    print("\t\t (C)",flush=True)
 
 print("Loading data", flush=True)
 
