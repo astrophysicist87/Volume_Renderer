@@ -19,8 +19,8 @@ def output_to_text(iFrame, data_in, alldata):
     bigdata = np.swapaxes(np.tile(data,(Nx*Ny,1,1)), 0, 1)
     print("bigdata.shape=",bigdata.shape)
     print(alldata.shape)
-    #for tauslice in bigdata:
-    #    tauslice[
+    for tauslice in bigdata:
+        print(tauslice.shape)
     exit(1)
     
     
