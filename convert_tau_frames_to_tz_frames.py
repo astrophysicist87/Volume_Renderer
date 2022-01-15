@@ -28,8 +28,6 @@ print('data.shape =', data.shape)
 data = np.concatenate( (np.zeros_like(data[:,:,0])[:,:,np.newaxis], data), axis=2 )
 print('data.shape =', data.shape)
 
-print(data[0,:10])
-
 #exit(1)
 
 # doesn't matter what this is, just declare it
@@ -67,6 +65,8 @@ for iFrame, frame in enumerate(data):
             zSlice[:,0] = np.full_like( zSlice[:,0], tpts[iz] )
             zSlice[:,1] = np.full_like( zSlice[:,1], zpts[iz] )
         
+        print('output.shape = ', output.shape)
+
         # re-shape to (Nx,Ny,Nz,5) and set column order to t, x, y, z, e
         output = np.swapaxes(output.reshape((Nz,Ny,Nx,5)), 0, 2)[:,:,:,[0,2,3,1,4]]
         print(final.shape, output.shape)
