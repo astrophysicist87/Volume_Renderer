@@ -116,7 +116,7 @@ def main():
                                   init_func=init, blit=True)
 
     f = "animation_log_ed_complete.mp4"
-    FFwriter = animation.FFMpegWriter(fps=10, extra_args=['-vcodec', 'libx264'])
+    FFwriter = animation.FFMpegWriter(fps=40, extra_args=['-vcodec', 'libx264'])
     ani.save(f, writer=FFwriter)
     #f = "animation.gif" 
     #ani.save(f, writer='imagemagick', fps=10)
