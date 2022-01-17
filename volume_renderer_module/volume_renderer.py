@@ -93,7 +93,10 @@ def render_volume(points, datacube, angles, **kwargs):
                           bounds_error=False, fill_value=fill_value\
                          ).reshape((N,N,N))
 
-    print("Camera ranges:",np.amin(camera_grid),np.amax(camera_grid),flush=True)
+    mininds = ind = np.unravel_index(np.argmin(camera_grid, axis=None), camera_grid.shape)
+    maxinds = ind = np.unravel_index(np.argmin(camera_grid, axis=None), camera_grid.shape)
+    print("Camera ranges:",np.amin(camera_grid),np.amax(camera_grid),\
+          mininds,maxinds,c[mininds.tolist()],c[maxinds.tolist()],flush=True)
 
     # Do Volume Rendering
     image = np.zeros((camera_grid.shape[1],camera_grid.shape[2],3))
