@@ -43,8 +43,6 @@ def linearTransferFunction(x0, **kwargs):
     max_opacity  = kwargs.get("max_opacity")  if "max_opacity"  in kwargs else 0.5
     cutoff       = kwargs.get("cutoff")       if "cutoff"       in kwargs else 0.0
 
-    #print("linearTransferFunction:",frac,max_opacity,cutoff,flush=True)
-
     frac = cutoff
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     cutoff = np.clip(cutoff, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)  # maps cutoff --> 0
@@ -93,10 +91,13 @@ def animate(i):
     # this is where the image array is produced
     eFO = 0.266 # freeze-out temperature in GeV
     TFO = 0.154 # freeze-out temperature in GeV
-    image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/2.0), N=image_pixel_dimension, \
+    image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/4.0), N=image_pixel_dimension, \
                                           transferFunction=linearTransferFunction, \
                                           scale_max=maximum, cutoff=eFO, use_log_densities=True)
-    
+
+    print("Projected max:",i,np.amax(image),flush=True)
+
+
     # z-axis in image points up by default
     # swap axes to get conventional heavy-ion orientation
     image = np.swapaxes(image, 0, 1)
