@@ -111,8 +111,8 @@ for iFrame, frame in enumerate(data):
     elements_to_print = (final[:,0] == iFrame)
     #print("1",elements_to_print.shape)
     #print("2a",final[elements_to_print].shape)
-    #output_to_text(iFrame, final[elements_to_print], data)
-    output_to_hdf5(iFrame, final[elements_to_print], data)
+    output_to_text(iFrame, final[elements_to_print], data)
+    #output_to_hdf5(iFrame, final[elements_to_print], data)
     #print("2b",final[elements_to_print].shape)
     final = final[np.logical_not(elements_to_print)]
     #final = final.reshape([final.size//(Nx*Ny*5),Nx*Ny,5])
