@@ -43,7 +43,7 @@ def linearTransferFunction(x0, **kwargs):
     max_opacity  = kwargs.get("max_opacity")  if "max_opacity"  in kwargs else 0.5
     cutoff       = kwargs.get("cutoff")       if "cutoff"       in kwargs else 0.0
 
-    print("linearTransferFunction:",frac,max_opacity,cutoff,flush=True)
+    #print("linearTransferFunction:",frac,max_opacity,cutoff,flush=True)
 
     frac = cutoff
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
