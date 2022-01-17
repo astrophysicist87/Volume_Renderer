@@ -10,7 +10,7 @@ from scipy.interpolate import interpn
 from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
-image_pixel_dimension = 500
+image_pixel_dimension = 50
 maximum = 0.0
 chosen_colormap = cm.get_cmap('inferno', 256)
 
@@ -43,11 +43,13 @@ def linearTransferFunction(x0, **kwargs):
     max_opacity  = kwargs.get("max_opacity")  if "max_opacity"  in kwargs else 0.5
     cutoff       = kwargs.get("cutoff")       if "cutoff"       in kwargs else 0.0
 
+    print("linearTransferFunction:",frac,max_opacity,cutoff,flush=True)
+
     frac = cutoff
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     cutoff = np.clip(cutoff, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)  # maps cutoff --> 0
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
-    a = max_opacity*x #*theta(100.0, cutoff, x)
+    a = max_opacity*x
     return r,g,b,a
 
 
@@ -85,6 +87,8 @@ def animate(i):
     
     if i==0:
         maximum = np.amax(datacube)
+        
+    print("Max:",i,maximum,flush=True)
 
     # this is where the image array is produced
     eFO = 0.266 # freeze-out temperature in GeV
