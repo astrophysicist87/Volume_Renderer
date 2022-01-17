@@ -80,15 +80,18 @@ def render_volume(points, datacube, angles, **kwargs):
     qi = np.array([qxR.ravel(), qyR.ravel(), qzR.ravel()]).T
 
     # Interpolate onto Camera Grid
-    camera_grid = np.zeros((N,N,N))
-    if use_log_densities:
-        camera_grid = np.exp(interpn(points, np.log(datacube), qi, method='linear',\
-                                      bounds_error=False, fill_value=fill_value\
-                                     )).reshape((N,N,N))
-    else:
-        camera_grid = interpn(points, datacube, qi, method='linear',\
-                                      bounds_error=False, fill_value=fill_value\
-                                     ).reshape((N,N,N))
+    #camera_grid = np.zeros((N,N,N))
+    #if use_log_densities:
+    #    camera_grid = np.exp(interpn(points, np.log(datacube), qi, method='linear',\
+    #                                  bounds_error=False, fill_value=fill_value\
+    #                                 )).reshape((N,N,N))
+    #else:
+    #    camera_grid = interpn(points, datacube, qi, method='linear',\
+    #                                  bounds_error=False, fill_value=fill_value\
+    #                                 ).reshape((N,N,N))
+    camera_grid = interpn(points, datacube, qi, method='linear',\
+                          bounds_error=False, fill_value=fill_value\
+                         ).reshape((N,N,N))
 
     print("Camera ranges:",np.amin(camera_grid),np.amax(camera_grid),flush=True)
 
