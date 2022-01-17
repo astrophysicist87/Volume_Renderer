@@ -58,6 +58,14 @@ def render_volume(points, datacube, angles, **kwargs):
 
     cutoff     = kwargs.get("cutoff")     if "cutoff"     in kwargs else 0.0
     fill_value = kwargs.get("fill_value") if "fill_value" in kwargs else np.amin(datacube)
+    
+    # allow user to pass custom transfer function
+    transferFunction = kwargs.get("transferFunction") if "transferFunction" in kwargs \
+                                                      else defaultTransferFunction
+    
+    # allow to use log of density to determine colors
+    use_log_densities = kwargs.get("use_log_densities") if "use_log_densities" in kwargs \
+                                                        else False
 
     phi, theta = angles
     N = kwargs.get("N") if "N" in kwargs else 180
@@ -86,15 +94,8 @@ def render_volume(points, datacube, angles, **kwargs):
 
     # Do Volume Rendering
     image = np.zeros((camera_grid.shape[1],camera_grid.shape[2],3))
-
-    # allow user to pass custom transfer function
-    transferFunction = kwargs.get("transferFunction") if "transferFunction" in kwargs \
-                                                      else defaultTransferFunction
     
-    # allow to use log of density to determine colors
-    use_log_densities = kwargs.get("use_log_densities") if "use_log_densities" in kwargs \
-                                                        else False
-    
+    # Allow to plot log densities instead
     if use_log_densities:
         logmin  = np.log(kwargs.get("scale_min")) if "scale_min" in kwargs else np.amin(np.log(datacube))
         logmax  = np.log(kwargs.get("scale_max")) if "scale_max" in kwargs else np.amax(np.log(datacube))
