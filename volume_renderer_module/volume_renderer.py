@@ -75,7 +75,9 @@ def render_volume(points, datacube, angles, **kwargs):
     camera_grid = interpn(points, datacube, qi, method='linear',\
                                   bounds_error=False, fill_value=fill_value\
                                  ).reshape((N,N,N))
-    
+
+    print("Camera ranges:",np.amin(camera_grid),np.amax(camera_grid),flush=True)
+
     # Do Volume Rendering
     image = np.zeros((camera_grid.shape[1],camera_grid.shape[2],3))
 
