@@ -95,7 +95,7 @@ def render_volume(points, datacube, angles, **kwargs):
 
     mininds = np.unravel_index(np.argmin(camera_grid, axis=None), camera_grid.shape)
     maxinds = np.unravel_index(np.argmax(camera_grid, axis=None), camera_grid.shape)
-    print("Data ranges:",np.amin(datacube),np.amax(datacube),flush=True)
+    print("Data ranges:",np.amin(datacube),np.amax(datacube),np.amin(qi,axis=0),np.amax(qi,axis=0),flush=True)
     print("Camera ranges:",np.amin(camera_grid),np.amax(camera_grid),\
           mininds,maxinds,c[list(mininds)],c[list(maxinds)],flush=True)
 
