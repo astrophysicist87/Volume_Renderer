@@ -95,8 +95,8 @@ def animate(i):
                                           transferFunction=linearTransferFunction, \
                                           scale_max=maximum, cutoff=eFO, use_log_densities=True)
 
-    print("Projected max:",i,np.amax(image[:,:,0]),np.amax(image[:,:,1]),\
-          np.amax(image[:,:,2]),np.amax(image[:,:,3]),flush=True)
+    print("Projected max:",i,np.amax(image[:,:,0]),\
+          np.amax(image[:,:,1]),np.amax(image[:,:,2]),flush=True)
 
 
     # z-axis in image points up by default
