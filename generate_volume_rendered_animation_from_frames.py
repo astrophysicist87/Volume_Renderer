@@ -10,7 +10,7 @@ from scipy.interpolate import interpn
 from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
-image_pixel_dimension = 101
+image_pixel_dimension = 501
 maximum = 0.0
 chosen_colormap = cm.get_cmap('inferno', 256)
 
