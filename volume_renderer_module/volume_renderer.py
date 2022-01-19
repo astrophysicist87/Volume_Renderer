@@ -98,9 +98,10 @@ def render_volume(points, datacube, angles, **kwargs):
     print("Data ranges:",np.amin(datacube),np.amax(datacube),np.amin(qi,axis=0),np.amax(qi,axis=0),flush=True)
     print("Camera ranges:",np.amin(camera_grid),np.amax(camera_grid),\
           mininds,maxinds,c[list(mininds)],c[list(maxinds)],flush=True)
-    print(interpn(points, datacube, qi, method='linear',\
+    print(interpn(points, datacube, np.array([[0,0,0]]), method='linear',\
                           bounds_error=False, fill_value=fill_value\
-                         ),"\n\n\n\n\n\n\n",flush=True)
+                         ),flush=True)
+    exit(1)
 
     # Do Volume Rendering
     image = np.zeros((camera_grid.shape[1],camera_grid.shape[2],3))
