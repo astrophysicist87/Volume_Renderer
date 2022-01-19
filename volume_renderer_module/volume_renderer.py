@@ -101,7 +101,8 @@ def render_volume(points, datacube, angles, **kwargs):
     print(interpn(points, datacube, np.array([[0,0,0]]), method='linear',\
                           bounds_error=False, fill_value=fill_value\
                          ),flush=True)
-    print(qi[len(qi)//2])
+    norms = np.array([q.norm() for q in qi])
+    print(qi[np.where(np.norm(qi)<1.0)])
     exit(1)
 
     # Do Volume Rendering
