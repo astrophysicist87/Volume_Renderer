@@ -101,7 +101,7 @@ def render_volume(points, datacube, angles, **kwargs):
     print(interpn(points, datacube, np.array([[0,0,0]]), method='linear',\
                           bounds_error=False, fill_value=fill_value\
                          ),flush=True)
-    print(qi)
+    print(qi[len(qi)//2])
     exit(1)
 
     # Do Volume Rendering
