@@ -69,7 +69,7 @@ def render_volume(points, datacube, angles, **kwargs):
 
     phi, theta = angles
     N = kwargs.get("N") if "N" in kwargs else 180
-    c = np.linspace(-20.0, 20.0, N)
+    c = np.linspace(-10.0, 10.0, N)
     qx, qy, qz = np.meshgrid(c,c,c)
     qxR  = qx
     qyR  = qy * np.cos(theta) - qz * np.sin(theta) 
