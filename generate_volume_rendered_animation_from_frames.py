@@ -9,6 +9,7 @@ import volume_renderer
 from scipy.interpolate import interpn
 from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 image_pixel_dimension = 501
 maximum = 0.0
