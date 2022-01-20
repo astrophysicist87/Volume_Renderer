@@ -104,12 +104,12 @@ def animate(i):
     # swap axes to get conventional heavy-ion orientation
     image = np.swapaxes(image, 0, 1)
 
-    #im = plt.imshow(image, cmap=chosen_colormap)
-    ax = plt.gca()
-    im = ax.imshow(image, cmap=chosen_colormap)
-    divider = make_axes_locatable(ax)
-    cax = divider.append_axes("right", size="5%", pad=0.05)
-    plt.colorbar(im, cax=cax)
+    im = plt.imshow(image, cmap=chosen_colormap)
+    #ax = plt.gca()
+    #im = ax.imshow(image, cmap=chosen_colormap)
+    #divider = make_axes_locatable(ax)
+    #cax = divider.append_axes("right", size="5%", pad=0.05)
+    #plt.colorbar(im, cax=cax)
     
     plt.axis('off')
     plt.savefig('animation_frames/frame' + str(i) + '.png', dpi=500, bbox_inches='tight', pad_inches = 0)
