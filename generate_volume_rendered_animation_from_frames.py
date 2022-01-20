@@ -10,6 +10,7 @@ from scipy.interpolate import interpn
 from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
+use_fixed_colorscale = False
 image_pixel_dimension = 501
 maximum = 0.0
 chosen_colormap = cm.get_cmap('inferno', 256)
@@ -83,7 +84,9 @@ def animate(i):
     datacube = np.array(f['energy_density'])
     points = (x, y, z)
     
-    if i==0:
+    # use_fixed_colorscale == True:  set maximum from i==0 only
+    # use_fixed_colorscale == False: set maximum from each frame separately
+    if i==0 or not use_fixed_colorscale:
         maximum = np.amax(datacube)
         
     print("Max:",i,maximum,flush=True)
