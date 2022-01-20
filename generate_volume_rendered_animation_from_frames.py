@@ -106,6 +106,10 @@ def animate(i):
     # z-axis in image points up by default
     # swap axes to get conventional heavy-ion orientation
     image = np.swapaxes(image, 0, 1)
+    
+    print((image_pixel_dimension-1)//2)
+    print(image.shape)
+    print('Image center:', image[(image_pixel_dimension-1)//2,(image_pixel_dimension-1)//2])
 
     im = plt.imshow(image, cmap=chosen_colormap)
     #ax = plt.gca()
