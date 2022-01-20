@@ -97,7 +97,7 @@ def animate(i):
     #                                      cutoff=eFO, max_opacity=1.0, use_log_densities=True)
 
     image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/2.0), N=image_pixel_dimension, \
-                                          transferFunction=linearTransferFunction, use_log_densities=True)
+                                          transferFunction=linearTransferFunction)
 
     print("Projected max:",i,np.amax(image[:,:,0]),\
           np.amax(image[:,:,1]),np.amax(image[:,:,2]),flush=True)
