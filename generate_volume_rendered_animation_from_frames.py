@@ -92,9 +92,12 @@ def animate(i):
     # this is where the image array is produced
     eFO = 0.266 # freeze-out temperature in GeV
     TFO = 0.154 # freeze-out temperature in GeV
+    #image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/2.0), N=image_pixel_dimension, \
+    #                                      transferFunction=constantTransferFunction, \
+    #                                      cutoff=eFO, max_opacity=1.0, use_log_densities=True)
+
     image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/2.0), N=image_pixel_dimension, \
-                                          transferFunction=constantTransferFunction, \
-                                          cutoff=eFO, max_opacity=1.0, use_log_densities=True)
+                                          transferFunction=constantTransferFunction, use_log_densities=True)
 
     print("Projected max:",i,np.amax(image[:,:,0]),\
           np.amax(image[:,:,1]),np.amax(image[:,:,2]),flush=True)
@@ -120,7 +123,7 @@ def animate(i):
 def main():
 
     # Plot Volume Rendering
-    fig = plt.figure(figsize=(8,8), dpi=500)
+    fig = plt.figure(figsize=(2,2), dpi=500)
     plt.subplots_adjust(top=1, bottom=0, right=1, left=0, hspace=0, wspace=0)
     plt.margins(0, 0)
         
