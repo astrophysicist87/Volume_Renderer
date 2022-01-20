@@ -93,7 +93,7 @@ def animate(i):
     TFO = 0.154 # freeze-out temperature in GeV
     image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/2.0), N=image_pixel_dimension, \
                                           transferFunction=linearTransferFunction, \
-                                          scale_max=maximum, cutoff=eFO, use_log_densities=True)
+                                          cutoff=eFO, use_log_densities=True)
 
     print("Projected max:",i,np.amax(image[:,:,0]),\
           np.amax(image[:,:,1]),np.amax(image[:,:,2]),flush=True)
