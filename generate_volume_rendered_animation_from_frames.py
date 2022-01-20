@@ -44,7 +44,7 @@ def linearTransferFunction(x0, **kwargs):
     max_opacity  = kwargs.get("max_opacity")  if "max_opacity"  in kwargs else 0.5
     cutoff       = kwargs.get("cutoff")       if "cutoff"       in kwargs else 0.0
 
-    #frac = cutoff
+    frac = cutoff
     x = np.clip(x0, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)
     cutoff = np.clip(cutoff, frac, 1.0)/(1.0-frac)-frac/(1.0-frac)  # maps cutoff --> 0
     r,g,b,a = np.transpose(np.array(chosen_colormap(x)), axes=[2,0,1])
@@ -97,7 +97,7 @@ def animate(i):
     #                                      cutoff=eFO, max_opacity=1.0, use_log_densities=True)
 
     image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/2.0), N=image_pixel_dimension, \
-                                          transferFunction=linearTransferFunction)
+                                          transferFunction=linearTransferFunction, fill_value=0.0)
 
     print("Projected max:",i,np.amax(image[:,:,0]),\
           np.amax(image[:,:,1]),np.amax(image[:,:,2]),flush=True)
