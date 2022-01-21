@@ -11,7 +11,7 @@ from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-image_pixel_dimension = 101
+image_pixel_dimension = 501
 maximum = 0.0
 chosen_colormap = cm.get_cmap('inferno', 256)
 
@@ -128,7 +128,7 @@ def animate(i):
 def main():
 
     # Plot Volume Rendering
-    fig = plt.figure(figsize=(8,8), dpi=500)
+    fig = plt.figure(figsize=(1,1), dpi=500)
     plt.subplots_adjust(top=1, bottom=0, right=1, left=0, hspace=0, wspace=0)
     plt.margins(0, 0)
         
