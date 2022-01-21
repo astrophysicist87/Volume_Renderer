@@ -86,7 +86,7 @@ def animate(i):
     datacube = np.array(f['energy_density'])
     points = (x, y, z)
     
-    print("Image center", z)
+    #print("Image center", z)
     
     if i==0:
         maximum = np.amax(datacube)
@@ -103,17 +103,16 @@ def animate(i):
     #image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/2.0), N=image_pixel_dimension, \
     #                                      transferFunction=linearTransferFunction, fill_value=0.0)
 
-    print("Projected max:",i,np.amax(image[:,:,0]),\
-          np.amax(image[:,:,1]),np.amax(image[:,:,2]),flush=True)
+    #print("Projected max:",i,np.amax(image[:,:,0]),\
+    #      np.amax(image[:,:,1]),np.amax(image[:,:,2]),flush=True)
 
 
     # z-axis in image points up by default
     # swap axes to get conventional heavy-ion orientation
     image = np.swapaxes(image, 0, 1)
     
-    #print((image_pixel_dimension-1)//2)
-    print(image.shape)
-    print('Image center:', image[(image.shape[0]-1)//2,(image.shape[1]-1)//2])
+    #print(image.shape)
+    #print('Image center:', image[(image.shape[0]-1)//2,(image.shape[1]-1)//2])
 
     im = plt.imshow(image)
     #ax = plt.gca()
