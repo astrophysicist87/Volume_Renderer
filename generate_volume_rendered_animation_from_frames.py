@@ -84,6 +84,8 @@ def animate(i):
     datacube = np.array(f['energy_density'])
     points = (x, y, z)
     
+    print("Image center", z)
+    
     if i==0:
         maximum = np.amax(datacube)
         
