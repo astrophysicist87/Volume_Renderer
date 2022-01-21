@@ -111,7 +111,7 @@ def animate(i):
     print(image.shape)
     print('Image center:', image[(image_pixel_dimension-1)//2,(image_pixel_dimension-1)//2])
 
-    im = plt.imshow(image, cmap=chosen_colormap)
+    im = plt.imshow(image)
     #ax = plt.gca()
     #im = ax.imshow(image, cmap=chosen_colormap)
     #divider = make_axes_locatable(ax)
