@@ -69,7 +69,7 @@ def render_volume(points, datacube, angles, **kwargs):
 
     phi, theta = angles
     N = kwargs.get("N") if "N" in kwargs else 180
-    upsample_factor = 1
+    upsample_factor = 2
     c = np.linspace(-20.0, 20.0, upsample_factor*N+1) if upsample_factor > 1 \
                                                       else np.linspace(-20.0, 20.0, N)
     qx, qy, qz = np.meshgrid(c,c,c)
@@ -91,12 +91,15 @@ def render_volume(points, datacube, angles, **kwargs):
     #    camera_grid = interpn(points, datacube, qi, method='linear',\
     #                                  bounds_error=False, fill_value=fill_value\
     #                                 ).reshape((N,N,N))
-    camera_grid = interpn(points, datacube, qi, method='linear',\
-                          bounds_error=False, fill_value=fill_value\
-                         ).reshape((N,N,N))
     
-    # downsample transverse frame axes
-    camera_grid = camera_grid[:,::upsample_factor,::upsample_factor]
+    print('Image center (before)',flush=True)
+    
+    camera_grid = (interpn(points, datacube, qi, method='linear',\
+                          bounds_error=False, fill_value=fill_value\
+                         ).reshape((N,N,N))\
+                   )[:,::upsample_factor,::upsample_factor]
+
+    print('Image center (after)',flush=True)
 
     #mininds = np.unravel_index(np.argmin(camera_grid, axis=None), camera_grid.shape)
     #maxinds = np.unravel_index(np.argmax(camera_grid, axis=None), camera_grid.shape)
