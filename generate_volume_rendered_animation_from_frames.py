@@ -84,8 +84,8 @@ def animate(i):
     datacube = np.array(f['energy_density'])
     points = (x, y, z)
     
-    #if i==0:
-    #    maximum = np.amax(datacube)
+    if i==0:
+        maximum = np.amax(datacube)
         
     print("Max:",i,maximum,flush=True)
 
@@ -94,7 +94,7 @@ def animate(i):
     TFO = 0.154 # freeze-out temperature in GeV
     image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/2.0), N=image_pixel_dimension, \
                                           transferFunction=linearTransferFunction, \
-                                          cutoff=eFO, use_log_densities=True)
+                                          scale_max=maximum, cutoff=eFO, use_log_densities=True)
 
     #image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/2.0), N=image_pixel_dimension, \
     #                                      transferFunction=linearTransferFunction, fill_value=0.0)
