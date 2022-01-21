@@ -56,8 +56,9 @@ def render_volume(points, datacube, angles, **kwargs):
     
     datacube += 1e-15
 
-    cutoff     = kwargs.get("cutoff")     if "cutoff"     in kwargs else 0.0
-    fill_value = kwargs.get("fill_value") if "fill_value" in kwargs else np.amin(datacube)
+    cutoff      = kwargs.get("cutoff")      if "cutoff"      in kwargs else 0.0
+    fill_value  = kwargs.get("fill_value")  if "fill_value"  in kwargs else np.amin(datacube)
+    max_opacity = kwargs.get("max_opacity") if "max_opacity" in kwargs else 0.5
     
     # allow user to pass custom transfer function
     transferFunction = kwargs.get("transferFunction") if "transferFunction" in kwargs \
@@ -109,18 +110,6 @@ def render_volume(points, datacube, angles, **kwargs):
     
     print('Image center (after)',flush=True)
 
-    #mininds = np.unravel_index(np.argmin(camera_grid, axis=None), camera_grid.shape)
-    #maxinds = np.unravel_index(np.argmax(camera_grid, axis=None), camera_grid.shape)
-    #print("Data ranges:",np.amin(datacube),np.amax(datacube),flush=True)
-    #print("Camera ranges:",np.amin(camera_grid),np.amax(camera_grid),\
-    #      mininds,maxinds,c[list(mininds)],c[list(maxinds)],flush=True)
-    #print(interpn(points, datacube, np.array([[0,0,0]]), method='linear',\
-    #                      bounds_error=False, fill_value=fill_value\
-    #                     ),flush=True)
-    #print(qi.size)
-    #print(qi[np.where(np.linalg.norm(qi,axis=1)<1.0)])
-    #exit(1)
-    #print("\n\n\n\n")
 
     # Do Volume Rendering
     image = np.zeros((camera_grid.shape[1],camera_grid.shape[2],3))
@@ -132,11 +121,12 @@ def render_volume(points, datacube, angles, **kwargs):
         logmin  = np.log(kwargs.get("scale_min")) if "scale_min" in kwargs else np.amin(np.log(camera_grid))
         logmax  = np.log(kwargs.get("scale_max")) if "scale_max" in kwargs else np.amax(np.log(camera_grid))
         normed_log_cutoff = (np.log(cutoff)-logmin)/(logmax-logmin)
-        print("Scales:",logmin,logmax,normed_log_cutoff,flush=True)
+        #print("Scales:",logmin,logmax,normed_log_cutoff,flush=True)
         for dataslice in camera_grid:
             log_dataslice = np.log(dataslice)
             normed_log_dataslice = (log_dataslice-logmin)/(logmax-logmin)
-            r,g,b,a = transferFunction(normed_log_dataslice, cutoff=normed_log_cutoff)
+            r,g,b,a = transferFunction(normed_log_dataslice, cutoff=normed_log_cutoff, \
+                                       max_opacity=max_opacity)
             image[:,:,0] = a*r + (1-a)*image[:,:,0]
             image[:,:,1] = a*g + (1-a)*image[:,:,1]
             image[:,:,2] = a*b + (1-a)*image[:,:,2]
@@ -156,7 +146,8 @@ def render_volume(points, datacube, angles, **kwargs):
             normed_dataslice = (dataslice - minimum)/(maximum - minimum)
             #print('Dataslice:', np.amin(dataslice),np.amax(dataslice),\
             #      np.amin(normed_dataslice),np.amax(normed_dataslice))
-            r,g,b,a = transferFunction(normed_dataslice, cutoff=normed_cutoff)
+            r,g,b,a = transferFunction(normed_dataslice, cutoff=normed_cutoff, \
+                                       max_opacity=max_opacity)
             image[:,:,0] = a*r + (1-a)*image[:,:,0]
             image[:,:,1] = a*g + (1-a)*image[:,:,1]
             image[:,:,2] = a*b + (1-a)*image[:,:,2]
