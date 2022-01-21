@@ -69,9 +69,8 @@ def render_volume(points, datacube, angles, **kwargs):
 
     phi, theta = angles
     N = kwargs.get("N") if "N" in kwargs else 180
-    c = np.linspace(-20.0, 20.0, N)
-    cp = np.linspace(-20.0, 20.0, 10*N)
-    qx, qy, qz = np.meshgrid(cp,c,c)
+    c = np.linspace(-20.0, 20.0, 10*N)
+    qx, qy, qz = np.meshgrid(c,c,c)
     qxR  = qx
     qyR  = qy * np.cos(theta) - qz * np.sin(theta) 
     qzR  = qz * np.cos(theta) + qy * np.sin(theta)
@@ -92,7 +91,10 @@ def render_volume(points, datacube, angles, **kwargs):
     #                                 ).reshape((N,N,N))
     camera_grid = interpn(points, datacube, qi, method='linear',\
                           bounds_error=False, fill_value=fill_value\
-                         ).reshape((10*N,N,N))
+                         ).reshape((N,N,N))
+    
+    # downsample transverse frame axes
+    camera_grid = camera_grid[:,::10,::10]
 
     #mininds = np.unravel_index(np.argmin(camera_grid, axis=None), camera_grid.shape)
     #maxinds = np.unravel_index(np.argmax(camera_grid, axis=None), camera_grid.shape)
