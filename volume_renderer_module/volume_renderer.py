@@ -130,11 +130,11 @@ def render_volume(points, datacube, angles, **kwargs):
             image[:,:,0] = a*r + (1-a)*image[:,:,0]
             image[:,:,1] = a*g + (1-a)*image[:,:,1]
             image[:,:,2] = a*b + (1-a)*image[:,:,2]
-            print(r[(image.shape[0]-1)//2,(image.shape[1]-1)//2],\
-                  g[(image.shape[0]-1)//2,(image.shape[1]-1)//2],\
-                  b[(image.shape[0]-1)//2,(image.shape[1]-1)//2],\
-                  a[(image.shape[0]-1)//2,(image.shape[1]-1)//2],\
-                  image[(image.shape[0]-1)//2,(image.shape[1]-1)//2])
+            #print(r[(image.shape[0]-1)//2,(image.shape[1]-1)//2],\
+            #      g[(image.shape[0]-1)//2,(image.shape[1]-1)//2],\
+            #      b[(image.shape[0]-1)//2,(image.shape[1]-1)//2],\
+            #      a[(image.shape[0]-1)//2,(image.shape[1]-1)//2],\
+            #      image[(image.shape[0]-1)//2,(image.shape[1]-1)//2])
     else:
         #minimum = kwargs.get("scale_min") if "scale_min" in kwargs else np.amin(datacube)
         #maximum = kwargs.get("scale_max") if "scale_max" in kwargs else np.amax(datacube)    
