@@ -94,7 +94,8 @@ def animate(i):
     TFO = 0.154 # freeze-out temperature in GeV
     image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/2.0), N=image_pixel_dimension, \
                                           transferFunction=linearTransferFunction, \
-                                          scale_max=maximum, cutoff=eFO, use_log_densities=True)
+                                          scale_max=maximum, max_opacity=1.0, \
+                                          cutoff=eFO, use_log_densities=True)
 
     #image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/2.0), N=image_pixel_dimension, \
     #                                      transferFunction=linearTransferFunction, fill_value=0.0)
