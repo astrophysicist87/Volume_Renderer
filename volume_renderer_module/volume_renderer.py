@@ -79,7 +79,9 @@ def render_volume(points, datacube, angles, **kwargs):
     qxRR = qxR * np.cos(phi) - qyR * np.sin(phi) 
     qyRR = qyR * np.cos(phi) + qxR * np.sin(phi) 
     qzRR = qzR
-    qi = np.array([qxR.ravel(), qyR.ravel(), qzR.ravel()]).T
+    qi = np.array([qxR[:,::upsample_factor,::upsample_factor].ravel(), \
+                   qyR[:,::upsample_factor,::upsample_factor].ravel(), \
+                   qzR[:,::upsample_factor,::upsample_factor].ravel()]).T
 
     # Interpolate onto Camera Grid
     #camera_grid = np.zeros((N,N,N))
@@ -92,14 +94,16 @@ def render_volume(points, datacube, angles, **kwargs):
     #                                  bounds_error=False, fill_value=fill_value\
     #                                 ).reshape((N,N,N))
     
-    print('Image center (before)',flush=True)
+    #print('Image center (before)',flush=True)
     
-    camera_grid = (interpn(points, datacube, qi, method='linear',\
+    camera_grid = interpn(points, datacube, qi, method='linear',\
                           bounds_error=False, fill_value=fill_value\
-                         ).reshape((newN,newN,newN))\
-                   )[:,::upsample_factor,::upsample_factor]
+                         ).reshape((newN,N,N))
+    
+    
+    #[:,::upsample_factor,::upsample_factor]
 
-    print('Image center (after)',flush=True)
+    #print('Image center (after)',flush=True)
 
     #mininds = np.unravel_index(np.argmin(camera_grid, axis=None), camera_grid.shape)
     #maxinds = np.unravel_index(np.argmax(camera_grid, axis=None), camera_grid.shape)
