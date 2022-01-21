@@ -109,7 +109,7 @@ def animate(i):
     # swap axes to get conventional heavy-ion orientation
     image = np.swapaxes(image, 0, 1)
     
-    //print((image_pixel_dimension-1)//2)
+    #print((image_pixel_dimension-1)//2)
     print(image.shape)
     print('Image center:', image[(image.shape[0]-1)//2,(image.shape[1]-1)//2])
 
