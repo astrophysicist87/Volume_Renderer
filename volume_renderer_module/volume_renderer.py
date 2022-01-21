@@ -69,9 +69,10 @@ def render_volume(points, datacube, angles, **kwargs):
 
     phi, theta = angles
     N = kwargs.get("N") if "N" in kwargs else 180
-    upsample_factor = 10
+    upsample_factor = 1
     newN = upsample_factor*N+1 if upsample_factor > 1 else N
-    c = np.linspace(-5.0, 5.0, newN)
+    #c = np.linspace(-20.0, 20.0, newN)
+    c = np.sort(np.unique(np.concatenate((np.linspace(-20,20,newN),points[0],points[1],points[2]))))
     qx, qy, qz = np.meshgrid(c,c,c)
     qxR  = qx
     qyR  = qy * np.cos(theta) - qz * np.sin(theta) 
