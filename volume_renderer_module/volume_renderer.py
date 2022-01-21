@@ -70,8 +70,8 @@ def render_volume(points, datacube, angles, **kwargs):
     phi, theta = angles
     N = kwargs.get("N") if "N" in kwargs else 180
     upsample_factor = 2
-    c = np.linspace(-20.0, 20.0, upsample_factor*N+1) if upsample_factor > 1 \
-                                                      else np.linspace(-20.0, 20.0, N)
+    newN = upsample_factor*N+1 if upsample_factor > 1 else N
+    c = np.linspace(-20.0, 20.0, newN)
     qx, qy, qz = np.meshgrid(c,c,c)
     qxR  = qx
     qyR  = qy * np.cos(theta) - qz * np.sin(theta) 
@@ -96,7 +96,7 @@ def render_volume(points, datacube, angles, **kwargs):
     
     camera_grid = (interpn(points, datacube, qi, method='linear',\
                           bounds_error=False, fill_value=fill_value\
-                         ).reshape((N,N,N))\
+                         ).reshape((newN,newN,newN))\
                    )[:,::upsample_factor,::upsample_factor]
 
     print('Image center (after)',flush=True)
