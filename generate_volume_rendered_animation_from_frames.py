@@ -91,13 +91,13 @@ def animate(i):
     if i==0:
         maximum = np.amax(datacube)
         
-    print("Max:",i,maximum,flush=True)
+    #print("Max:",i,maximum,flush=True)
 
     # this is where the image array is produced
     eFO = 0.266 # freeze-out temperature in GeV
     TFO = 0.154 # freeze-out temperature in GeV
     image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/4.0), N=image_pixel_dimension, \
-                                          transferFunction=linearTransferFunction, scale_max=maximum,\
+                                          transferFunction=linearTransferFunction, \
                                           max_opacity=1.0, cutoff=eFO, use_log_densities=True)
 
     #image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/2.0), N=image_pixel_dimension, \
