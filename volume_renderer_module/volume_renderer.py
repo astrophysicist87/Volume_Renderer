@@ -71,8 +71,8 @@ def render_volume(points, datacube, angles, **kwargs):
     N = kwargs.get("N") if "N" in kwargs else 180
     upsample_factor = 1
     newN = upsample_factor*N+1 if upsample_factor > 1 else N
-    #c = np.linspace(-20.0, 20.0, newN)
-    c = np.sort(np.unique(np.concatenate((np.linspace(-20,20,newN),np.linspace(-1,1,newN)))))
+    c = np.linspace(-20.0, 20.0, newN)
+    #c = np.sort(np.unique(np.concatenate((np.linspace(-20,20,newN),np.linspace(-1,1,newN)))))
     print(c,len(c))
     qx, qy, qz = np.meshgrid(c,c,c)
     qxR  = qx
@@ -127,10 +127,10 @@ def render_volume(points, datacube, angles, **kwargs):
     
     # Allow to plot log densities instead
     if use_log_densities:
-        logmin  = np.log(kwargs.get("scale_min")) if "scale_min" in kwargs else np.amin(np.log(datacube))
-        logmax  = np.log(kwargs.get("scale_max")) if "scale_max" in kwargs else np.amax(np.log(datacube))
-        #logmin  = np.log(kwargs.get("scale_min")) if "scale_min" in kwargs else np.amin(np.log(camera_grid))
-        #logmax  = np.log(kwargs.get("scale_max")) if "scale_max" in kwargs else np.amax(np.log(camera_grid))
+        #logmin  = np.log(kwargs.get("scale_min")) if "scale_min" in kwargs else np.log(np.amin(datacube))
+        #logmax  = np.log(kwargs.get("scale_max")) if "scale_max" in kwargs else np.log(np.amax(datacube))
+        logmin  = np.log(kwargs.get("scale_min")) if "scale_min" in kwargs else np.amin(np.log(camera_grid))
+        logmax  = np.log(kwargs.get("scale_max")) if "scale_max" in kwargs else np.amax(np.log(camera_grid))
         normed_log_cutoff = (np.log(cutoff)-logmin)/(logmax-logmin)
         print("Scales:",logmin,logmax,normed_log_cutoff,flush=True)
         for dataslice in camera_grid:
@@ -141,10 +141,10 @@ def render_volume(points, datacube, angles, **kwargs):
             image[:,:,1] = a*g + (1-a)*image[:,:,1]
             image[:,:,2] = a*b + (1-a)*image[:,:,2]
     else:
-        minimum = kwargs.get("scale_min") if "scale_min" in kwargs else np.amin(datacube)
-        maximum = kwargs.get("scale_max") if "scale_max" in kwargs else np.amax(datacube)    
-        #minimum = kwargs.get("scale_min") if "scale_min" in kwargs else np.amin(camera_grid)
-        #maximum = kwargs.get("scale_max") if "scale_max" in kwargs else np.amax(camera_grid)    
+        #minimum = kwargs.get("scale_min") if "scale_min" in kwargs else np.amin(datacube)
+        #maximum = kwargs.get("scale_max") if "scale_max" in kwargs else np.amax(datacube)    
+        minimum = kwargs.get("scale_min") if "scale_min" in kwargs else np.amin(camera_grid)
+        maximum = kwargs.get("scale_max") if "scale_max" in kwargs else np.amax(camera_grid)    
         normed_cutoff = (cutoff-minimum)/(maximum-minimum)
         #print(minimum, maximum, normed_cutoff)
         for dataslice in camera_grid:
