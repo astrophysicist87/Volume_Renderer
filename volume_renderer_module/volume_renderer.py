@@ -98,9 +98,13 @@ def render_volume(points, datacube, angles, **kwargs):
     
     print('Image center (before)',flush=True)
     
+    #camera_grid = interpn(points, datacube, qi, method='linear',\
+    #                      bounds_error=False, fill_value=fill_value\
+    #                     ).reshape((newN,N,N))
+    cN = len(c)
     camera_grid = interpn(points, datacube, qi, method='linear',\
                           bounds_error=False, fill_value=fill_value\
-                         ).reshape((newN,N,N))
+                         ).reshape((cN,cN,cN))
     
     print('Image center (after)',flush=True)
 
