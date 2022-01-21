@@ -81,7 +81,8 @@ def render_volume(points, datacube, angles, **kwargs):
     qzRR = qzR
     qi = np.array([qxR[:,:-1:upsample_factor,:-1:upsample_factor].ravel(), \
                    qyR[:,:-1:upsample_factor,:-1:upsample_factor].ravel(), \
-                   qzR[:,:-1:upsample_factor,:-1:upsample_factor].ravel()]).T
+                   qzR[:,:-1:upsample_factor,:-1:upsample_factor].ravel()]).T \
+         if upsample > 1 else np.array([qxR.ravel(), qyR.ravel(), qzR.ravel()]).T
 
     # Interpolate onto Camera Grid
     #camera_grid = np.zeros((N,N,N))
