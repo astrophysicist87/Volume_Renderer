@@ -41,7 +41,7 @@ def main():
     ani = animation.FuncAnimation(fig, animate, np.arange(len(sys.argv[1:])), \
                                   init_func=init, blit=True)
 
-    f = "animation_log_ed_complete.mp4"
+    f = "complete_movie.mp4"
     FFwriter = animation.FFMpegWriter(fps=40, extra_args=['-vcodec', 'libx264'])
     ani.save(f, writer=FFwriter)
     #f = "animation.gif" 
