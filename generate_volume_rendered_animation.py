@@ -122,7 +122,9 @@ def animate(i):
     #plt.colorbar(im, cax=cax)
     
     plt.axis('off')
-    plt.savefig('animation_frames/frame' + str(i) + '.png', dpi=500, bbox_inches='tight', pad_inches = 0)
+    #plt.savefig('animation_frames/frame' + str(i) + '.png', dpi=500, bbox_inches='tight', pad_inches = 0)
+    plt.imsave(fname='animation_frames/frame' + str(i) + '.png', \
+               arr=image, cmap=chosen_colormap, format='png')
     return im,
 
 
