@@ -11,7 +11,7 @@ from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-image_pixel_dimension = 501
+image_pixel_dimension = 500
 maximum = 0.0
 chosen_colormap = cm.get_cmap('inferno', 256)
 
@@ -140,7 +140,7 @@ def main():
     ani = animation.FuncAnimation(fig, animate, np.arange(len(sys.argv[1:])), \
                                   init_func=init, blit=True)
 
-    f = "animation_log_ed_complete.mp4"
+    f = "post_collision.mp4"
     FFwriter = animation.FFMpegWriter(fps=40, extra_args=['-vcodec', 'libx264'])
     ani.save(f, writer=FFwriter)
     #f = "animation.gif" 
