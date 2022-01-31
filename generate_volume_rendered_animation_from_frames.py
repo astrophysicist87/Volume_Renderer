@@ -12,7 +12,7 @@ from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import matplotlib.image as mpimg
 
-image_pixel_dimension = 501
+image_pixel_dimension = 500
 chosen_colormap = cm.get_cmap('inferno', 256)
 
 def init():
