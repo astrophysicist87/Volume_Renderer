@@ -98,7 +98,7 @@ def animate(i):
     TFO = 0.154 # freeze-out temperature in GeV
     image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/4.0), N=image_pixel_dimension, \
                                           transferFunction=linearTransferFunction, \
-                                          max_opacity=1.0, cutoff=eFO, use_log_densities=True)
+                                          max_opacity=0.5, cutoff=eFO, use_log_densities=True)
 
     #image = volume_renderer.render_volume(points, datacube, (0.0, np.pi/2.0), N=image_pixel_dimension, \
     #                                      transferFunction=linearTransferFunction, fill_value=0.0)
@@ -123,7 +123,7 @@ def animate(i):
     
     plt.axis('off')
     #plt.savefig('animation_frames/frame' + str(i) + '.png', dpi=500, bbox_inches='tight', pad_inches = 0)
-    plt.imsave(fname='animation_frames/frame' + str(i) + '.png', \
+    plt.imsave(fname='old_animation_frames/frame' + str(i) + '.png', \
                arr=image, cmap=chosen_colormap, format='png')
     return im,
 
@@ -140,7 +140,7 @@ def main():
     ani = animation.FuncAnimation(fig, animate, np.arange(len(sys.argv[1:])), \
                                   init_func=init, blit=True)
 
-    f = "post_collision.mp4"
+    f = "old_post_collision.mp4"
     FFwriter = animation.FFMpegWriter(fps=40, extra_args=['-vcodec', 'libx264'])
     ani.save(f, writer=FFwriter)
     #f = "animation.gif" 
