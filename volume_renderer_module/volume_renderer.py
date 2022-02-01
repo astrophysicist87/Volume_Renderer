@@ -120,8 +120,8 @@ def render_volume(points, datacube, angles, **kwargs):
     if use_log_densities:
         #logmin  = np.log(kwargs.get("scale_min")) if "scale_min" in kwargs else np.log(np.amin(datacube))
         #logmax  = np.log(kwargs.get("scale_max")) if "scale_max" in kwargs else np.log(np.amax(datacube))
-        logmin  = np.log(kwargs.get("scale_min")) if "scale_min" in kwargs else np.amin(np.log(camera_grid))
-        logmax  = np.log(kwargs.get("scale_max")) if "scale_max" in kwargs else np.amax(np.log(camera_grid))
+        logmin  = np.log(kwargs.get("scale_min")) if "scale_min" in kwargs else np.log(np.amin(camera_grid))
+        logmax  = np.log(kwargs.get("scale_max")) if "scale_max" in kwargs else np.log(np.amax(camera_grid))
         normed_log_cutoff = (np.log(cutoff)-logmin)/(logmax-logmin)
         #print("Scales:",logmin,logmax,normed_log_cutoff,flush=True)
         for dataslice in camera_grid:
