@@ -83,7 +83,7 @@ def main():
     datacube = np.array(f['energy_density'])
     points = (x, y, z)
         
-    maximum = sys.argv[2] if len(sys.argv) > 2 else np.amax(datacube)
+    maximum = float(sys.argv[2]) if len(sys.argv) > 2 else np.amax(datacube)
         
     # this is where the image array is produced
     eFO = 0.266 # freeze-out temperature in GeV
