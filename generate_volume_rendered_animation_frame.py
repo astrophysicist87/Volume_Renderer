@@ -98,7 +98,7 @@ def main():
     im = plt.imshow(image)
     
     plt.axis('off')
-    plt.imsave(fname='old_animation_frames/frame' + str(i) + '.png', \
+    plt.imsave(fname='old_animation_frames/frame' + sys.argv[3] + '.png', \
                arr=image, cmap=chosen_colormap, format='png')
 
     return 0
