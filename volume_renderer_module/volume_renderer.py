@@ -111,6 +111,8 @@ def render_volume(points, datacube, angles, **kwargs):
     #print('Image center (after)',flush=True)
     
     print('Check:',camera_grid.shape)
+    print(np.amin(camera_grid))
+    print(np.amax(camera_grid))
 
 
     # Do Volume Rendering
