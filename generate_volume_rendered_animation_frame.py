@@ -76,7 +76,7 @@ def main():
     plt.margins(0, 0)
         
     # Load Datacube
-    f = h5.File(sys.argv[i+1], 'r')
+    f = h5.File(sys.argv[1], 'r')
     x = np.array(f['x'])
     y = np.array(f['y'])
     z = np.array(f['z'])
